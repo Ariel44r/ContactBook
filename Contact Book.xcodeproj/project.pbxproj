@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F2616D51F7B04B400928A7C /* addOrChangeDataContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2616D41F7B04B400928A7C /* addOrChangeDataContact.swift */; };
 		4F4828C11F7769B80091B8BB /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4828C01F7769B80091B8BB /* Contact.swift */; };
 		4F4828C31F7769E30091B8BB /* ContactPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4828C21F7769E30091B8BB /* ContactPhoto.swift */; };
 		4F4828C51F7769FC0091B8BB /* ContactSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4828C41F7769FC0091B8BB /* ContactSearchResults.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F2616D41F7B04B400928A7C /* addOrChangeDataContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addOrChangeDataContact.swift; sourceTree = "<group>"; };
 		4F4828C01F7769B80091B8BB /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		4F4828C21F7769E30091B8BB /* ContactPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactPhoto.swift; path = ../ContactPhoto.swift; sourceTree = "<group>"; };
 		4F4828C41F7769FC0091B8BB /* ContactSearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactSearchResults.swift; path = ../ContactSearchResults.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			children = (
 				4F802FE61F75D8AD00DE31DE /* AppDelegate.swift */,
 				4F802FEA1F75D8AD00DE31DE /* Main.storyboard */,
+				4F2616D41F7B04B400928A7C /* addOrChangeDataContact.swift */,
 				4F5E95711F79C910009E90A7 /* UICollectionControllers */,
 				4F80301C1F75E96D00DE31DE /* ContactAPI */,
 				4F802FED1F75D8AD00DE31DE /* Assets.xcassets */,
@@ -296,6 +299,7 @@
 				4F4828C51F7769FC0091B8BB /* ContactSearchResults.swift in Sources */,
 				4F8030151F75DB8000DE31DE /* CollectionViewController.swift in Sources */,
 				4F802FE71F75D8AD00DE31DE /* AppDelegate.swift in Sources */,
+				4F2616D51F7B04B400928A7C /* addOrChangeDataContact.swift in Sources */,
 				4F4828C31F7769E30091B8BB /* ContactPhoto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

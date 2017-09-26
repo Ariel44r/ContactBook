@@ -12,15 +12,15 @@ import UIKit
 class ContactPhoto: Equatable {
     
     var name: String
-    var lastName: String
-    var ID: String
+    var lastName: String?
+    var ID: String?
     var cellPhone: String?
     var photoTumbnail: UIImage?
     
-    init (name: String, lastName: String, ID: String) {
+    init (_ name: String,_ lastName: String,_ cellPhone: String) {
         self.name = name
         self.lastName = lastName
-        self.ID = ID
+        self.cellPhone = cellPhone
     }
     
     func sizeToFillWidthOfSize (_ size: CGSize) -> CGSize {

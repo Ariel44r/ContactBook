@@ -22,10 +22,17 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     
     //MARK: Actions&Outlets
     
+    //collectionViewOutlet
     @IBOutlet var collectionContacts: UICollectionView!
     
+    //addContactActionButton
+    @IBAction func addContact(_ sender: Any) {
+        
+        
+        
+    }
     
-    
+    //changeProfileImageActionButton
     @IBAction func contactChangePhoto(_ sender: Any) {
         
         print("Button change image from gallery are pressed")
@@ -33,6 +40,7 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
         image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
         image.sourceType = UIImagePickerControllerSourceType.photoLibrary
         image.allowsEditing = false
+        currentIndexPhoto = (sender as AnyObject).tag
         //assign value to currentIndexPhoto = sender.tag
         self.present(image,animated: true) {
             //after complete process
@@ -42,14 +50,19 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     
     //get image and assign to contact`s atribute
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        print("the index is: \(currentIndexPhoto)")
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            contactPhoto[currentIndexPhoto].photoTumbnail = image
+            contact.receiveImageChangeAndSave(image, currentIndexPhoto)
         }
         self.dismiss(animated: true, completion: nil)
+        
+        collectionContacts.reloadData()
+        
     }
 
 }
 
+//ObtainPhotoForIndexPath
 private extension CollectionViewController {
     
     func photoForIndexPath (indexPath: IndexPath) -> ContactPhoto {
@@ -67,7 +80,7 @@ extension CollectionViewController: UITextFieldDelegate {
         activityIndicator.frame = textField.bounds
         activityIndicator.startAnimating()
         
-        contact.searchContactForTerm(textField.text!, index: 4) {
+        contact.searchContactForTerm(textField.text!) {
             results, error in
             
             activityIndicator.removeFromSuperview()
@@ -78,10 +91,10 @@ extension CollectionViewController: UITextFieldDelegate {
             }
             
             if let results = results {
-                print("Have been Found: \(results.searchResults.count) matching \(results.searchTerm)")
+                print("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
                 self.searches.insert(results, at: 0)
                 
-                self.collectionView?.reloadData()
+                self.collectionContacts.reloadData()
             }
         }
         
@@ -91,7 +104,6 @@ extension CollectionViewController: UITextFieldDelegate {
     }
     
 }
-
 
 //MARK: UICollectionViewDataSource
 extension CollectionViewController {
@@ -109,6 +121,8 @@ extension CollectionViewController {
         let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.backgroundColor = UIColor.white
         cell.contactPhoto.image = contactPhoto.photoTumbnail
+        cell.contactChangePhoto.addTarget(self, action: #selector(CollectionViewController.contactChangePhoto(_:)), for: UIControlEvents.touchUpInside)
+        cell.contactChangePhoto.tag = indexPath.item
         cell.contactName.text = contactPhoto.name
         return cell
     }
@@ -134,5 +148,7 @@ extension CollectionViewController : UICollectionViewDelegateFlowLayout {
     }
     
 }
+
+
 
 
