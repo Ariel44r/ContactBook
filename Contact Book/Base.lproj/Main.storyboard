@@ -12,7 +12,7 @@
         <!--Collection View Controller-->
         <scene sceneID="x6v-ra-zL8">
             <objects>
-                <collectionViewController id="TG9-8R-90G" sceneMemberID="viewController">
+                <collectionViewController id="TG9-8R-90G" customClass="CollectionViewController" customModule="Contact_Book" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="QUI-Yh-9Ek">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,13 +24,38 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MsN-l5-s31">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ContactCell" id="MsN-l5-s31" customClass="ContactPhotoCell" customModule="Contact_Book" customModuleProvider="target">
+                                <rect key="frame" x="87.5" y="0.0" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yBK-9Y-6qs">
+                                            <rect key="frame" x="1" y="0.0" width="200" height="149"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgp-rD-Jqd">
+                                            <rect key="frame" x="28" y="149" width="143" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hBF-M8-owR">
+                                            <rect key="frame" x="1" y="0.0" width="200" height="149"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <connections>
+                                                <action selector="contactChangePhoto:" destination="TG9-8R-90G" eventType="touchUpInside" id="HOQ-Iu-bBL"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
                                 </view>
+                                <size key="customSize" width="200" height="200"/>
+                                <connections>
+                                    <outlet property="contactName" destination="Dgp-rD-Jqd" id="rsq-BF-idv"/>
+                                    <outlet property="contactPhoto" destination="yBK-9Y-6qs" id="MXk-us-InK"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -50,7 +75,11 @@
                                 <outlet property="delegate" destination="TG9-8R-90G" id="G1z-3U-YxO"/>
                             </connections>
                         </textField>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="Bnb-ck-QG3"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="collectionContacts" destination="QUI-Yh-9Ek" id="75a-Mh-f0e"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gq9-WB-huU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

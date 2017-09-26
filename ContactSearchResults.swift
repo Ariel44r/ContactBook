@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+struct ContactSearchResults {
+    
+    let searchTerm: String
+    let searchResults: [ContactPhoto]
+
+}
