@@ -32,6 +32,10 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
         
     }
     
+    @IBAction func showDetail(_ sender: Any) {
+        self.performSegue(withIdentifier: "segueDetail", sender: nil)
+    }
+    
     //changeProfileImageActionButton
     @IBAction func contactChangePhoto(_ sender: Any) {
         
@@ -120,7 +124,7 @@ extension CollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ContactPhotoCell
         let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.backgroundColor = UIColor.white
-        cell.contactPhoto.image = contactPhoto.photoTumbnail
+        cell.contactPhoto.image = contactPhoto.getImageFromPathWithID()
         cell.contactChangePhoto.addTarget(self, action: #selector(CollectionViewController.contactChangePhoto(_:)), for: UIControlEvents.touchUpInside)
         cell.contactChangePhoto.tag = indexPath.item
         cell.contactName.text = contactPhoto.name

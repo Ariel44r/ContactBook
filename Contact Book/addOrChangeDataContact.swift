@@ -31,8 +31,10 @@ class addOrChangeDataContact: UIViewController {
             let contactPhoto = ContactPhoto(name, lastName, cellPhone)
             contact.receiveContactsAndAdd(contact: contactPhoto)
         } else {
-            displayalert(userMessage: "Debe ingresar al menos el nombre :)")
+            displayalert(userMessage: "You must enter at least the name :)")
         }
+        self.dismiss(animated: true, completion: nil)
+        //self.navigationController?.popViewController(animated: true)
       
     }
     
@@ -48,6 +50,10 @@ class addOrChangeDataContact: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    /*func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        segue.destination
+    }*/
     
 
     /*

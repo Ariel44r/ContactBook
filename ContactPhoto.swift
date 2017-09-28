@@ -15,15 +15,26 @@ class ContactPhoto: Equatable {
     var lastName: String?
     var ID: String?
     var cellPhone: String?
-    var photoTumbnail: UIImage?
+    var imagePath: String = ""
     
     init (_ name: String,_ lastName: String,_ cellPhone: String) {
         self.name = name
         self.lastName = lastName
         self.cellPhone = cellPhone
+        self.imagePath = getPath() + "/images/contact.png"
     }
     
-    func sizeToFillWidthOfSize (_ size: CGSize) -> CGSize {
+    //MARK: getImageFromPathWithID
+    
+    func getImageFromPathWithID () -> UIImage {
+        if let currentImage = UIImage(contentsOfFile: self.imagePath) {
+            return currentImage
+        }
+        return UIImage(contentsOfFile: getPath() + "/images/contact.png")!
+    }
+    
+    
+    /*func sizeToFillWidthOfSize (_ size: CGSize) -> CGSize {
         
         guard let photoTumbnail = photoTumbnail else {
             return size
@@ -41,6 +52,17 @@ class ContactPhoto: Equatable {
             returnSize.width = size.height * aspectRatio
         }
         return returnSize
+    }*/
+    
+}
+
+//MARK: FileManager
+extension ContactPhoto {
+    
+    func getPath() -> String {
+        let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let docsDir = dirPath[0]
+        return docsDir
     }
     
 }

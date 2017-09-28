@@ -78,13 +78,13 @@
                         </textField>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="Bnb-ck-QG3">
                             <connections>
-                                <action selector="addContact:" destination="TG9-8R-90G" id="l4S-4a-28s"/>
-                                <segue destination="o5C-LN-35Z" kind="showDetail" id="YNh-2J-ne1"/>
+                                <action selector="showDetail:" destination="TG9-8R-90G" id="4Z5-mM-4Xa"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionContacts" destination="QUI-Yh-9Ek" id="75a-Mh-f0e"/>
+                        <segue destination="o5C-LN-35Z" kind="presentation" identifier="segueDetail" id="Tm1-wM-4sD"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gq9-WB-huU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -156,7 +156,6 @@
                                 <state key="normal" title="Record"/>
                                 <connections>
                                     <action selector="actionButtonRecord:" destination="o5C-LN-35Z" eventType="touchUpInside" id="qdo-2M-uVZ"/>
-                                    <segue destination="QjP-kc-Lnr" kind="showDetail" id="u1p-Dz-u0Z"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -189,7 +188,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dZy-bD-YSO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1845.5999999999999" y="98.50074962518741"/>
+            <point key="canvasLocation" x="1935" y="99"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qiB-pj-41G">
