@@ -27,6 +27,7 @@ class Contact {
             debugPrint("Name: \(con.name), Last Name: \(con.lastName), ID: \(con.ID), Cell Phone: \(con.cellPhone), Image: path: \(con.imagePath)")
         }
         saveDataOnJSONFile("ContactBook", "json")
+        receiveObjectFromJSON()
         
     }
     
@@ -64,6 +65,7 @@ class Contact {
         
         debugPrint("searchContactForTermFunc says: The number of contacts is: \(contactPhotos.count)")
         
+        //receiveobjectfrom JSON
         
         OperationQueue.main.addOperation({
             completion(ContactSearchResults(searchTerm: searchTerm, searchResults: self.contactPhotos), nil)
@@ -127,6 +129,41 @@ extension Contact {
     
 }
 
+//MARK: receiveObjectFromJSON
+extension Contact {
+    func receiveObjectFromJSON ()  {
+        
+        var contactReceived = [ContactPhoto]()
+        
+        //read the json file
+        let fileManager = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let jsonURL = fileManager.appendingPathComponent("ContactBook.json")
+        let jsonReadData: Data
+        do {
+            jsonReadData = try Data(contentsOf: jsonURL)
+             let parsedContacts = try JSONSerialization.jsonObject(with: jsonReadData, options: .mutableContainers)
+            let contacts = parsedContacts as! [[String: AnyObject]]
+            for contact in contacts {
+                
+                guard let contactName = contact["name"] as? String,
+                let contactlast = contact["lastName"] as? String,
+                let contactid = contact["ID"] as? String,
+                let contactcellphone = contact["cellPhone"] as? String,
+                    let contactimagepath = contact["imagePath"] as? String
+                else{ continue}
+                let ContactParse = ContactPhoto(contactName,contactlast,contactcellphone)
+                contactReceived.append(ContactParse)
+            }
+            for contact in contactReceived {
+                print ("contact from JSON file: \(contact)")
+            }
+        } catch {
+            print(error)
+        }
+        
+      
+    }
+}
 
 //MARK: checkForEmptyFields
 extension Contact {
