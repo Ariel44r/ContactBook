@@ -12,16 +12,17 @@ import UIKit
 class ContactPhoto: Equatable {
     
     var name: String
-    var lastName: String?
-    var ID: String?
-    var cellPhone: String?
+    var lastName: String
+    var ID: String
+    var cellPhone: String
     var imagePath: String = ""
     
     init (_ name: String,_ lastName: String,_ cellPhone: String) {
         self.name = name
         self.lastName = lastName
         self.cellPhone = cellPhone
-        self.imagePath = getPath() + "/images/contact.png"
+        self.imagePath = ContactPhoto.getPath() + "/images/contact.png"
+        self.ID = ""
     }
     
     //MARK: getImageFromPathWithID
@@ -30,7 +31,7 @@ class ContactPhoto: Equatable {
         if let currentImage = UIImage(contentsOfFile: self.imagePath) {
             return currentImage
         }
-        return UIImage(contentsOfFile: getPath() + "/images/contact.png")!
+        return UIImage(named: "contact.png")!
     }
     
     
@@ -59,7 +60,7 @@ class ContactPhoto: Equatable {
 //MARK: FileManager
 extension ContactPhoto {
     
-    func getPath() -> String {
+    static func getPath() -> String {
         let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let docsDir = dirPath[0]
         return docsDir

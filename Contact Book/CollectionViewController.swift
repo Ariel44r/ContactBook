@@ -34,6 +34,7 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     
     @IBAction func showDetail(_ sender: Any) {
         self.performSegue(withIdentifier: "segueDetail", sender: nil)
+        collectionContacts.reloadData()
     }
     
     //changeProfileImageActionButton

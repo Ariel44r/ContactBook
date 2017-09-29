@@ -18,9 +18,15 @@ class Contact {
     func receiveContactsAndAdd(contact: ContactPhoto) {
         
         contact.ID = getIDForNewImage()
-       
-        contactPhotos.append(contact)
-        debugPrint("Contact \(contact.name) append at contactPhotos in the index: \(contactPhotos.count - 1)")
+        checkForEmptyFields()
+        let newContact = contact
+        contactPhotos.append(newContact)
+        debugPrint("Contact \(newContact.name) append at contactPhotos in the index: \(contactPhotos.count - 1)")
+        
+        for con in contactPhotos {
+            debugPrint("Name: \(con.name), Last Name: \(con.lastName), ID: \(con.ID), Cell Phone: \(con.cellPhone), Image: path: \(con.imagePath)")
+        }
+        saveDataOnJSONFile("ContactBook", "json")
         
     }
     
@@ -29,7 +35,7 @@ class Contact {
         
         let fManager = FileManager()
         let pngImage = UIImagePNGRepresentation(image)
-        if !fManager.fileExists(atPath: getPath() + "images") {
+        if !fManager.fileExists(atPath: getPath() + "/images") {
             do {
                 try fManager.createDirectory(atPath: getPath() + "/images", withIntermediateDirectories: false, attributes: nil)
             } catch (let exception){
@@ -38,10 +44,10 @@ class Contact {
             
         }
         var IDPhoto: String = ""
-        if contactPhotos[index].ID == nil {
-            IDPhoto = getIDForNewImage()
+        if contactPhotos[index].ID == "" {
+            IDPhoto = String(index)
         } else {
-            IDPhoto = contactPhotos[index].ID!
+            IDPhoto = contactPhotos[index].ID
         }
         
         contactPhotos[index].imagePath = getPath() + "/images/\(IDPhoto).png"
@@ -51,19 +57,12 @@ class Contact {
     
     func searchContactForTerm(_ searchTerm: String, completion : @escaping (_ results: ContactSearchResults?, _ error: Error?) -> Void) {
         
-        let contacto = ContactPhoto("Ariel","Ramírez","5576604221")
-        contactPhotos.append(contacto)
-        
-        
         
         debugPrint("Search Term typed is: \(searchTerm)")
         
         //Add actions to find Contact for searchTerm
         
-        debugPrint("PATH: \(getPath())")
         debugPrint("searchContactForTermFunc says: The number of contacts is: \(contactPhotos.count)")
-        
-        saveDataOnJSONFile(contacto, "ContactBook", "json")
         
         
         OperationQueue.main.addOperation({
@@ -88,58 +87,43 @@ extension Contact {
 //MARK: SaveDataOnJsonFileAndPrintOnConsoleFunctions
 extension Contact {
     
-    func saveDataOnJSONFile (_ contactPhoto: ContactPhoto, _ fileName: String, _ xtension: String) {
-        let documentDirURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        let fileURL = documentDirURL.appendingPathComponent(fileName).appendingPathExtension(xtension)
-        
-        debugPrint("file Path: \(fileURL.path)")
-        
-        
-        
-        let writeString = "{\"name\": \"\(contactPhoto.name)\", \"lastName\": \"\(String(describing: contactPhoto.lastName))\", \"ID\": \"\(String(describing: contactPhoto.ID))\", \"cellPhone\": \"\(String(describing: contactPhoto.cellPhone))\"}"
+    func saveDataOnJSONFile (_ fileName: String, _ xtension: String) {
         
         checkForEmptyFields()
-        
-        if JSONSerialization.isValidJSONObject(contactPhotos) {
-            debugPrint("contactPhoto are JSON serialization object")
+        var topLevel_: [AnyObject] = []
+        for contactPhoto in contactPhotos {
+            var contactDictionary: NSMutableDictionary = NSMutableDictionary()
+            //var contactDictionary: Dictionary = Dictionary()
+            contactDictionary.setValue(contactPhoto.name, forKey: "name")
+            contactDictionary.setValue(contactPhoto.lastName, forKey: "lastName")
+            contactDictionary.setValue(contactPhoto.ID, forKey: "ID")
+            contactDictionary.setValue(contactPhoto.cellPhone, forKey: "cellPhone")
+            contactDictionary.setValue(contactPhoto.imagePath, forKey: "imagePath")
+
+            topLevel_.append(contactDictionary)
+        }
+        let topLevel = NSArray(array: topLevel_)
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted)
+            let fileManager = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let fileURL = fileManager.appendingPathComponent(fileName + "." + xtension)
             
-            do {
-                let JSONData = try JSONSerialization.data(withJSONObject: contactPhotos, options: .prettyPrinted)
-                debugPrint("The data on JSON file are: \(JSONData)")
+            debugPrint("JSON  File Path: \(fileURL.path)")
+            
+            let writeString = String(data: jsonData,encoding: .ascii)
+            do{
+                //Write the file
+                try writeString?.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
             } catch let error as NSError {
-                debugPrint("The JSON file are not generated")
+                debugPrint ("Failed to write on \(fileName).\(xtension)")
                 debugPrint(error)
             }
             
-        } else {
-            debugPrint("contactPhoto are not a JSON serialization object")
+        } catch {
+            print(error.localizedDescription)
         }
         
-        do{
-            //Write the file
-            try writeString.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
-        } catch let error as NSError {
-            debugPrint ("Failed to write on \(fileName).\(xtension)")
-            debugPrint(error)
-        }
-        
-        //read the file and print on console
-        
-        var readString = ""
-        do {
-            //Read the file
-            readString = try String(contentsOf: fileURL)
-        } catch let error as NSError {
-            debugPrint("Failed to read on \(fileName).\(xtension)")
-            debugPrint(error)
-        }
-        
-        debugPrint("The contents of file \(fileName).\(xtension) are: \(readString)")
     }
-    
-        
-    
-        
     
 }
 
@@ -166,7 +150,12 @@ extension Contact {
 
 extension Contact {
     func getIDForNewImage() -> String {
-        let ID = String(contactPhotos.count - 1)
+        let ID: String
+        if contactPhotos.count == 0 {
+            ID = String(contactPhotos.count)
+        } else {
+            ID = String(contactPhotos.count - 1)
+        }
         return ID
     }
 }
