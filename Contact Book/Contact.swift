@@ -15,9 +15,12 @@ class Contact {
     
     var contactPhotos = [ContactPhoto]()
     
+    
     func receiveContactsAndAdd(contact: ContactPhoto) {
         
+        contactPhotos = receiveObjectFromJSON()
         contact.ID = getIDForNewImage()
+        contact.imagePath = getPath()
         checkForEmptyFields()
         let newContact = contact
         contactPhotos.append(newContact)
@@ -26,14 +29,14 @@ class Contact {
         for con in contactPhotos {
             debugPrint("Name: \(con.name), Last Name: \(con.lastName), ID: \(con.ID), Cell Phone: \(con.cellPhone), Image: path: \(con.imagePath)")
         }
-        saveDataOnJSONFile("ContactBook", "json")
-        receiveObjectFromJSON()
+        saveDataOnJSONFile(contactPhotos, "ContactBook", "json")
+        
         
     }
     
     func receiveImageChangeAndSave (_ image: UIImage, _ index: Int) {
         
-        
+        contactPhotos = receiveObjectFromJSON()
         let fManager = FileManager()
         let pngImage = UIImagePNGRepresentation(image)
         if !fManager.fileExists(atPath: getPath() + "/images") {
@@ -44,16 +47,11 @@ class Contact {
             }
             
         }
-        var IDPhoto: String = ""
-        if contactPhotos[index].ID == "" {
-            IDPhoto = String(index)
-        } else {
-            IDPhoto = contactPhotos[index].ID
-        }
+       
         
-        contactPhotos[index].imagePath = getPath() + "/images/\(IDPhoto).png"
+        contactPhotos[index].imagePath = getPath() + "/images/\(index).png"
         fManager.createFile(atPath: contactPhotos[index].imagePath, contents: pngImage, attributes: nil)
-        
+        saveDataOnJSONFile(contactPhotos, "ContactBook", "json")
     }
     
     func searchContactForTerm(_ searchTerm: String, completion : @escaping (_ results: ContactSearchResults?, _ error: Error?) -> Void) {
@@ -66,35 +64,26 @@ class Contact {
         debugPrint("searchContactForTermFunc says: The number of contacts is: \(contactPhotos.count)")
         
         //receiveobjectfrom JSON
+        let receiveFromJSON = receiveObjectFromJSON()
         
         OperationQueue.main.addOperation({
-            completion(ContactSearchResults(searchTerm: searchTerm, searchResults: self.contactPhotos), nil)
+            completion(ContactSearchResults(searchTerm: searchTerm, searchResults: receiveFromJSON), nil)
         })
         
     }
 
 }
 
-//MARK: FileManager
-extension Contact {
-    
-    func getPath() -> String {
-        let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        let docsDir = dirPath[0]
-        return docsDir
-    }
-    
-}
 
 //MARK: SaveDataOnJsonFileAndPrintOnConsoleFunctions
 extension Contact {
     
-    func saveDataOnJSONFile (_ fileName: String, _ xtension: String) {
+    func saveDataOnJSONFile (_ contactPHoto: [ContactPhoto], _ fileName: String, _ xtension: String) {
         
         checkForEmptyFields()
         var topLevel_: [AnyObject] = []
-        for contactPhoto in contactPhotos {
-            var contactDictionary: NSMutableDictionary = NSMutableDictionary()
+        for contactPhoto in contactPHoto {
+            let contactDictionary: NSMutableDictionary = NSMutableDictionary()
             //var contactDictionary: Dictionary = Dictionary()
             contactDictionary.setValue(contactPhoto.name, forKey: "name")
             contactDictionary.setValue(contactPhoto.lastName, forKey: "lastName")
@@ -110,7 +99,7 @@ extension Contact {
             let fileManager = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             let fileURL = fileManager.appendingPathComponent(fileName + "." + xtension)
             
-            debugPrint("JSON  File Path: \(fileURL.path)")
+            debugPrint("JSON FILE PATH: \(fileURL.path)")
             
             let writeString = String(data: jsonData,encoding: .ascii)
             do{
@@ -131,7 +120,7 @@ extension Contact {
 
 //MARK: receiveObjectFromJSON
 extension Contact {
-    func receiveObjectFromJSON ()  {
+    func receiveObjectFromJSON () -> [ContactPhoto] {
         
         var contactReceived = [ContactPhoto]()
         
@@ -149,18 +138,19 @@ extension Contact {
                 let contactlast = contact["lastName"] as? String,
                 let contactid = contact["ID"] as? String,
                 let contactcellphone = contact["cellPhone"] as? String,
-                    let contactimagepath = contact["imagePath"] as? String
+                let contactimagepath = contact["imagePath"] as? String
                 else{ continue}
                 let ContactParse = ContactPhoto(contactName,contactlast,contactcellphone)
+                ContactParse.setIDAndImagePath(contactid, contactimagepath)
                 contactReceived.append(ContactParse)
             }
             for contact in contactReceived {
-                print ("contact from JSON file: \(contact)")
+                print ("contact from JSON file: Name: \(contact.name), Last Nme:  \(contact.lastName), ID: \(contact.ID), imagePath: \(contact.imagePath)")
             }
         } catch {
             print(error)
         }
-        
+       return contactReceived
       
     }
 }
@@ -169,7 +159,7 @@ extension Contact {
 extension Contact {
     
     func checkForEmptyFields () {
-        
+        let contactPhotos = receiveObjectFromJSON()
         for indexContact in contactPhotos {
             
             if indexContact.lastName == "" {
@@ -187,13 +177,16 @@ extension Contact {
 
 extension Contact {
     func getIDForNewImage() -> String {
-        let ID: String
-        if contactPhotos.count == 0 {
-            ID = String(contactPhotos.count)
-        } else {
-            ID = String(contactPhotos.count - 1)
-        }
-        return ID
+        return String(contactPhotos.count)
+    }
+}
+
+//MARK: fileManager
+extension Contact {
+    func getPath() -> String {
+        let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let docsDir = dirPath[0]
+        return docsDir
     }
 }
 

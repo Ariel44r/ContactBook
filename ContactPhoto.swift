@@ -21,17 +21,27 @@ class ContactPhoto: Equatable {
         self.name = name
         self.lastName = lastName
         self.cellPhone = cellPhone
-        self.imagePath = ContactPhoto.getPath() + "/images/contact.png"
+        self.imagePath = ""
         self.ID = ""
+    }
+    
+    func setIDAndImagePath(_ ID: String, _ imagePath: String) {
+        self.ID = ID
+        self.imagePath = imagePath
+        debugPrint(imagePath)
     }
     
     //MARK: getImageFromPathWithID
     
-    func getImageFromPathWithID () -> UIImage {
+    func getImageFromPathWithID (_ index: Int) -> UIImage {
+        let currentIm: UIImage
+        debugPrint("IMAGEPATHFROM getImageFromPathWithID: \(self.imagePath)")
         if let currentImage = UIImage(contentsOfFile: self.imagePath) {
-            return currentImage
+            currentIm = currentImage
+        } else {
+            currentIm = UIImage(named: "contact.png")!
         }
-        return UIImage(named: "contact.png")!
+        return currentIm
     }
     
     
@@ -57,16 +67,7 @@ class ContactPhoto: Equatable {
     
 }
 
-//MARK: FileManager
-extension ContactPhoto {
-    
-    static func getPath() -> String {
-        let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        let docsDir = dirPath[0]
-        return docsDir
-    }
-    
-}
+
 
 func == (lhs: ContactPhoto, rhs: ContactPhoto) -> Bool {
     return lhs.ID == rhs.ID

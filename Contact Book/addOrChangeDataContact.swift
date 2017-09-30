@@ -33,8 +33,8 @@ class addOrChangeDataContact: UIViewController {
         } else {
             displayalert(userMessage: "You must enter at least the name :)")
         }
-        self.dismiss(animated: true, completion: nil)
-        //self.navigationController?.popViewController(animated: true)
+        //self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
       
     }
     
