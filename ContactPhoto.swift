@@ -28,7 +28,6 @@ class ContactPhoto: Equatable {
     func setIDAndImagePath(_ ID: String, _ imagePath: String) {
         self.ID = ID
         self.imagePath = imagePath
-        debugPrint(imagePath)
     }
     
     //MARK: getImageFromPathWithID
@@ -44,7 +43,7 @@ class ContactPhoto: Equatable {
         PATH = PATH.replacingOccurrences(of: "/ContactBook.json", with: "")
         
         let currentPath: String = PATH + "/images/" + String(index) + ".png"
-        debugPrint("IMAGEPATHFROM getImageFromPathWithID: \(currentPath)")
+       
         if let currentImage = UIImage(contentsOfFile: currentPath) {
             currentIm = currentImage
         } else {

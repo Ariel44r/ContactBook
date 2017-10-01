@@ -33,10 +33,24 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+        contact.searchContactForTerm("allContacts") {
+            results, error in
+            
+            if let error = error {
+                debugPrint("Error searching \(error)")
+                return
+            }
+            
+            if let results = results {
+                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
+                self.searches.insert(results, at: 0)
+                
+                self.tableViewContacts.reloadData()
+            }
+        }
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -80,12 +94,12 @@ extension viewControllerTableView: UITextFieldDelegate {
             activityIndicator.removeFromSuperview()
             
             if let error = error {
-                print("Error searching \(error)")
+                debugPrint("Error searching \(error)")
                 return
             }
             
             if let results = results {
-                print("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
+                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
                 self.searches.insert(results, at: 0)
                 
                 self.tableViewContacts.reloadData()
@@ -104,11 +118,9 @@ extension viewControllerTableView: UITextFieldDelegate {
 extension viewControllerTableView {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        debugPrint("NUMBER OF searches: \(searches.count)")
         var items: Int = 0
         if searches.count > 0 {
             items = searches[section].searchResults.count
-            debugPrint("NUMBER OF searches[section].searchResults.count: \(items)")
         } else {
             items = searches.count
         }

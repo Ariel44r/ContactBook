@@ -39,7 +39,7 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     //changeProfileImageActionButton
     @IBAction func contactChangePhoto(_ sender: Any) {
         
-        print("Button change image from gallery are pressed")
+        debugPrint("Button change image from gallery are pressed")
         let image = UIImagePickerController()
         image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
         image.sourceType = UIImagePickerControllerSourceType.photoLibrary
@@ -53,16 +53,35 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     
     //get image and assign to contact`s atribute
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        print("the index is: \(currentIndexPhoto)")
+
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             contact.receiveImageChangeAndSave(image, currentIndexPhoto)
         }
         self.dismiss(animated: true, completion: nil)
-        
         collectionContacts.reloadData()
-        
-    }
 
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        contact.searchContactForTerm("allContacts") {
+            results, error in
+            
+            if let error = error {
+                debugPrint("Error searching \(error)")
+                return
+            }
+            
+            if let results = results {
+                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
+                self.searches.insert(results, at: 0)
+                
+                self.collectionContacts.reloadData()
+            }
+        }
+    }
 }
 
 //ObtainPhotoForIndexPath
@@ -89,12 +108,12 @@ extension CollectionViewController: UITextFieldDelegate {
             activityIndicator.removeFromSuperview()
             
             if let error = error {
-                print("Error searching \(error)")
+                debugPrint("Error searching \(error)")
                 return
             }
             
             if let results = results {
-                print("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
+                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
                 self.searches.insert(results, at: 0)
                 
                 self.collectionContacts.reloadData()
@@ -149,9 +168,7 @@ extension CollectionViewController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
     }
-    
+
 }
-
-
 
 

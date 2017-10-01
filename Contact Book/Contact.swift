@@ -20,13 +20,12 @@ class Contact {
     func receiveContactsAndAdd(contact: ContactPhoto) {
         
         contactPhotos = receiveObjectFromJSON()
-        debugPrint("MASTER PATH: \(PATH)")
+        
         contact.ID = getIDForNewImage()
         contact.imagePath = PATH
         checkForEmptyFields()
         let newContact = contact
         contactPhotos.append(newContact)
-        debugPrint("Contact \(newContact.name) append at contactPhotos in the index: \(contactPhotos.count - 1)")
         
         for con in contactPhotos {
             debugPrint("Name: \(con.name), Last Name: \(con.lastName), ID: \(con.ID), Cell Phone: \(con.cellPhone), Image: path: \(con.imagePath)")
@@ -52,19 +51,14 @@ class Contact {
        
         
         contactPhotos[index].imagePath = PATH + "/images/" + String(index) + ".png"
-        debugPrint("PHOTO CREATED AT \(contactPhotos[index].imagePath)")
+       
         fManager.createFile(atPath: contactPhotos[index].imagePath, contents: pngImage, attributes: nil)
         saveDataOnJSONFile(contactPhotos, "ContactBook", "json")
     }
     
     func searchContactForTerm(_ searchTerm: String, completion : @escaping (_ results: ContactSearchResults?, _ error: Error?) -> Void) {
         
-        
-        debugPrint("Search Term typed is: \(searchTerm)")
-        
         //Add actions to find Contact for searchTerm
-        
-        debugPrint("searchContactForTermFunc says: The number of contacts is: \(contactPhotos.count)")
         
         //receiveobjectfrom JSON
         let receiveFromJSON = receiveObjectFromJSON()
@@ -78,7 +72,7 @@ class Contact {
 }
 
 
-//MARK: SaveDataOnJsonFileAndPrintOnConsoleFunctions
+//MARK: SaveDataOnJsonFileFunction
 extension Contact {
     
     func saveDataOnJSONFile (_ contactPHoto: [ContactPhoto], _ fileName: String, _ xtension: String) {
@@ -102,7 +96,7 @@ extension Contact {
             let fileManager = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             let fileURL = fileManager.appendingPathComponent(fileName + "." + xtension)
             
-            debugPrint("JSON FILE PATH: \(fileURL.path)")
+           
             
             let writeString = String(data: jsonData,encoding: .ascii)
             do{
@@ -114,7 +108,7 @@ extension Contact {
             }
             
         } catch {
-            print(error.localizedDescription)
+            debugPrint(error.localizedDescription)
         }
         
     }
@@ -134,7 +128,7 @@ extension Contact {
         if PATH == "" {
             PATH = jsonURL.path
             PATH = PATH.replacingOccurrences(of: "/ContactBook.json", with: "")
-            debugPrint("PATH REASIGNED TO \(PATH)")
+           
         }
         
         let jsonReadData: Data
@@ -154,11 +148,8 @@ extension Contact {
                 ContactParse.setIDAndImagePath(contactid, contactimagepath)
                 contactReceived.append(ContactParse)
             }
-            for contact in contactReceived {
-                print ("contact from JSON file: Name: \(contact.name), Last Nme:  \(contact.lastName), ID: \(contact.ID), imagePath: \(contact.imagePath)")
-            }
         } catch {
-            print(error)
+            debugPrint(error)
         }
        return contactReceived
       
