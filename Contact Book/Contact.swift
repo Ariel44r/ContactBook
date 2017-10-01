@@ -15,12 +15,14 @@ class Contact {
     
     var contactPhotos = [ContactPhoto]()
     
+    fileprivate var PATH = ""
     
     func receiveContactsAndAdd(contact: ContactPhoto) {
         
         contactPhotos = receiveObjectFromJSON()
+        debugPrint("MASTER PATH: \(PATH)")
         contact.ID = getIDForNewImage()
-        contact.imagePath = getPath()
+        contact.imagePath = PATH
         checkForEmptyFields()
         let newContact = contact
         contactPhotos.append(newContact)
@@ -39,9 +41,9 @@ class Contact {
         contactPhotos = receiveObjectFromJSON()
         let fManager = FileManager()
         let pngImage = UIImagePNGRepresentation(image)
-        if !fManager.fileExists(atPath: getPath() + "/images") {
+        if !fManager.fileExists(atPath: PATH + "/images") {
             do {
-                try fManager.createDirectory(atPath: getPath() + "/images", withIntermediateDirectories: false, attributes: nil)
+                try fManager.createDirectory(atPath: PATH + "/images", withIntermediateDirectories: false, attributes: nil)
             } catch (let exception){
                 debugPrint (exception)
             }
@@ -49,7 +51,8 @@ class Contact {
         }
        
         
-        contactPhotos[index].imagePath = getPath() + "/images/\(index).png"
+        contactPhotos[index].imagePath = PATH + "/images/" + String(index) + ".png"
+        debugPrint("PHOTO CREATED AT \(contactPhotos[index].imagePath)")
         fManager.createFile(atPath: contactPhotos[index].imagePath, contents: pngImage, attributes: nil)
         saveDataOnJSONFile(contactPhotos, "ContactBook", "json")
     }
@@ -127,6 +130,13 @@ extension Contact {
         //read the json file
         let fileManager = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let jsonURL = fileManager.appendingPathComponent("ContactBook.json")
+       
+        if PATH == "" {
+            PATH = jsonURL.path
+            PATH = PATH.replacingOccurrences(of: "/ContactBook.json", with: "")
+            debugPrint("PATH REASIGNED TO \(PATH)")
+        }
+        
         let jsonReadData: Data
         do {
             jsonReadData = try Data(contentsOf: jsonURL)
@@ -181,12 +191,4 @@ extension Contact {
     }
 }
 
-//MARK: fileManager
-extension Contact {
-    func getPath() -> String {
-        let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        let docsDir = dirPath[0]
-        return docsDir
-    }
-}
 

@@ -35,8 +35,17 @@ class ContactPhoto: Equatable {
     
     func getImageFromPathWithID (_ index: Int) -> UIImage {
         let currentIm: UIImage
-        debugPrint("IMAGEPATHFROM getImageFromPathWithID: \(self.imagePath)")
-        if let currentImage = UIImage(contentsOfFile: self.imagePath) {
+        
+        let fileManager = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let jsonURL = fileManager.appendingPathComponent("ContactBook.json")
+        
+        
+        var PATH = jsonURL.path
+        PATH = PATH.replacingOccurrences(of: "/ContactBook.json", with: "")
+        
+        let currentPath: String = PATH + "/images/" + String(index) + ".png"
+        debugPrint("IMAGEPATHFROM getImageFromPathWithID: \(currentPath)")
+        if let currentImage = UIImage(contentsOfFile: currentPath) {
             currentIm = currentImage
         } else {
             currentIm = UIImage(named: "contact.png")!
