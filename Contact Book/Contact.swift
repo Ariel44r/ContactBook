@@ -58,16 +58,33 @@ class Contact {
     
     func searchContactForTerm(_ searchTerm: String, completion : @escaping (_ results: ContactSearchResults?, _ error: Error?) -> Void) {
         
-        //Add actions to find Contact for searchTerm
-        
         //receiveobjectfrom JSON
         let receiveFromJSON = receiveObjectFromJSON()
+        var searchContactForName = [ContactPhoto]()        //SearchContactForName
+        
+        if searchTerm == "*" {
+            searchContactForName = receiveFromJSON
+        } else {
+            for currentContact in receiveFromJSON {
+                if (currentContact.name.range(of: searchTerm) != nil) {
+                    searchContactForName.append(currentContact)
+                }
+            }
+        }
+        
         
         OperationQueue.main.addOperation({
-            completion(ContactSearchResults(searchTerm: searchTerm, searchResults: receiveFromJSON), nil)
+            completion(ContactSearchResults(searchTerm: searchTerm, searchResults: searchContactForName), nil)
         })
         
     }
+    
+    func deployAllContatcsOnJson (completion : @escaping (_ results: ContactSearchResults?, _ error: Error?) -> Void) {
+        let receiveFromJSON = receiveObjectFromJSON()
+        
+        OperationQueue.main.addOperation({
+            completion(ContactSearchResults(searchTerm: "*", searchResults: receiveFromJSON), nil)
+        })    }
 
 }
 

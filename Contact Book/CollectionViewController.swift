@@ -66,7 +66,7 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        contact.searchContactForTerm("allContacts") {
+        contact.deployAllContatcsOnJson(){
             results, error in
             
             if let error = error {

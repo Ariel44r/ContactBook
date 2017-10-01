@@ -35,7 +35,7 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        contact.searchContactForTerm("allContacts") {
+        contact.deployAllContatcsOnJson() {
             results, error in
             
             if let error = error {
