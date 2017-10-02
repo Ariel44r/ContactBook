@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F2616D51F7B04B400928A7C /* addOrChangeDataContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2616D41F7B04B400928A7C /* addOrChangeDataContact.swift */; };
+		4F46F5391F82E0D20053BBFB /* PopUpMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F46F5381F82E0D20053BBFB /* PopUpMenuViewController.swift */; };
 		4F4828C11F7769B80091B8BB /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4828C01F7769B80091B8BB /* Contact.swift */; };
 		4F4828C31F7769E30091B8BB /* ContactPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4828C21F7769E30091B8BB /* ContactPhoto.swift */; };
 		4F4828C51F7769FC0091B8BB /* ContactSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4828C41F7769FC0091B8BB /* ContactSearchResults.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		4F2616D41F7B04B400928A7C /* addOrChangeDataContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addOrChangeDataContact.swift; sourceTree = "<group>"; };
+		4F46F5381F82E0D20053BBFB /* PopUpMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMenuViewController.swift; sourceTree = "<group>"; };
 		4F4828C01F7769B80091B8BB /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		4F4828C21F7769E30091B8BB /* ContactPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactPhoto.swift; path = ../ContactPhoto.swift; sourceTree = "<group>"; };
 		4F4828C41F7769FC0091B8BB /* ContactSearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactSearchResults.swift; path = ../ContactSearchResults.swift; sourceTree = "<group>"; };
@@ -90,6 +92,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F46F53A1F82E1110053BBFB /* PopUpMenuController */ = {
+			isa = PBXGroup;
+			children = (
+				4F46F5381F82E0D20053BBFB /* PopUpMenuViewController.swift */,
+			);
+			name = PopUpMenuController;
+			sourceTree = "<group>";
+		};
 		4F5E95711F79C910009E90A7 /* UICollectionControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +144,7 @@
 			children = (
 				4F802FE61F75D8AD00DE31DE /* AppDelegate.swift */,
 				4F802FEA1F75D8AD00DE31DE /* Main.storyboard */,
+				4F46F53A1F82E1110053BBFB /* PopUpMenuController */,
 				4F6033411F7F07A500421161 /* tableViewController */,
 				4F5E95711F79C910009E90A7 /* UICollectionControllers */,
 				4F80301C1F75E96D00DE31DE /* ContactAPI */,
@@ -308,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F46F5391F82E0D20053BBFB /* PopUpMenuViewController.swift in Sources */,
 				4F4828C11F7769B80091B8BB /* Contact.swift in Sources */,
 				4F5E95701F79C609009E90A7 /* ContactPhotoCell.swift in Sources */,
 				4F6033401F7F079600421161 /* viewControllerTableView.swift in Sources */,

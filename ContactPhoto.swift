@@ -42,7 +42,7 @@ class ContactPhoto: Equatable {
         var PATH = jsonURL.path
         PATH = PATH.replacingOccurrences(of: "/ContactBook.json", with: "")
         
-        let currentPath: String = PATH + "/images/" + String(index) + ".png"
+        let currentPath: String = PATH + "/images/" + ID + ".png"
        
         if let currentImage = UIImage(contentsOfFile: currentPath) {
             currentIm = currentImage

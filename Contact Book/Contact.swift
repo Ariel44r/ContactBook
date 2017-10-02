@@ -66,7 +66,7 @@ class Contact {
             searchContactForName = receiveFromJSON
         } else {
             for currentContact in receiveFromJSON {
-                if (currentContact.name.range(of: searchTerm) != nil) {
+                if (currentContact.name.lowercased().range(of: searchTerm.lowercased()) != nil) {
                     searchContactForName.append(currentContact)
                 }
             }
@@ -147,7 +147,7 @@ extension Contact {
             PATH = PATH.replacingOccurrences(of: "/ContactBook.json", with: "")
            
         }
-        
+        debugPrint("MASTER PATH: " + PATH)
         let jsonReadData: Data
         do {
             jsonReadData = try Data(contentsOf: jsonURL)
