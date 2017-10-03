@@ -20,7 +20,6 @@ class Contact {
     func receiveContactsAndAdd(contact: ContactPhoto) {
         
         contactPhotos = receiveObjectFromJSON()
-        
         contact.ID = getIDForNewImage()
         contact.imagePath = PATH
         checkForEmptyFields()
@@ -31,7 +30,6 @@ class Contact {
             debugPrint("Name: \(con.name), Last Name: \(con.lastName), ID: \(con.ID), Cell Phone: \(con.cellPhone), Image: path: \(con.imagePath)")
         }
         saveDataOnJSONFile(contactPhotos, "ContactBook", "json")
-        
         
     }
     
@@ -58,6 +56,12 @@ class Contact {
     
     func deleteContact (index: Int) {
         contactPhotos = receiveObjectFromJSON()
+        let fileManager = FileManager.default
+        do {
+            try fileManager.removeItem(atPath: PATH + "/images/\(contactPhotos[index].ID).png")
+        } catch {
+            debugPrint("Somthing went wrong at remove image \(error)")
+        }
         contactPhotos.remove(at: index)
         saveDataOnJSONFile(contactPhotos, "ContactBook", "json")
     }
@@ -77,7 +81,6 @@ class Contact {
                 }
             }
         }
-        
         
         OperationQueue.main.addOperation({
             completion(ContactSearchResults(searchTerm: searchTerm, searchResults: searchContactForName), nil)

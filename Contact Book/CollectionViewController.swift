@@ -56,7 +56,6 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
             if let results = results {
                 debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
                 self.searches.insert(results, at: 0)
-                
                 self.collectionContacts.reloadData()
             }
         }
@@ -198,9 +197,7 @@ extension CollectionViewController {
                     return
                 }
                 if let results = results {
-                    debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
                     self.searches.insert(results, at: 0)
-                    
                     self.collectionContacts.reloadData()
                 }
             }
