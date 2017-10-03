@@ -25,7 +25,11 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     //collectionViewOutlet
     @IBOutlet var collectionContacts: UICollectionView!
     
-   
+   //actionSheet
+    @IBAction func actionSheet(_ sender: Any) {
+        actionSheetFunc((sender as AnyObject).tag)
+    }
+    
     
     @IBAction func showDetail(_ sender: Any) {
         self.performSegue(withIdentifier: "segueDetail", sender: nil)
@@ -34,32 +38,6 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     
     @IBAction func segueTableView(_ sender: Any) {
         self.performSegue(withIdentifier: "segueTableView", sender: nil)
-    }
-    
-    //changeProfileImageActionButton
-    @IBAction func contactChangePhoto(_ sender: Any) {
-        
-        debugPrint("Button change image from gallery are pressed")
-        let image = UIImagePickerController()
-        image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
-        image.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        image.allowsEditing = false
-        currentIndexPhoto = (sender as AnyObject).tag
-        self.present(image,animated: true) {
-            //after complete process
-        }
-        
-    }
-    
-    //get image and assign to contact`s atribute
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            contact.receiveImageChangeAndSave(image, currentIndexPhoto)
-        }
-        self.dismiss(animated: true, completion: nil)
-        collectionContacts.reloadData()
-
     }
     
     override func viewDidLoad() {
@@ -143,8 +121,8 @@ extension CollectionViewController {
         let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.backgroundColor = UIColor.white
         cell.contactPhoto.image = contactPhoto.getImageFromPathWithID(indexPath.item)
-        cell.contactChangePhoto.addTarget(self, action: #selector(CollectionViewController.contactChangePhoto(_:)), for: UIControlEvents.touchUpInside)
-        cell.contactChangePhoto.tag = indexPath.item
+        cell.actionSheet.addTarget(self, action: #selector(CollectionViewController.actionSheet(_:)), for: UIControlEvents.touchUpInside)
+        cell.actionSheet.tag = indexPath.item
         cell.contactName.text = contactPhoto.name
         return cell
     }
@@ -171,4 +149,59 @@ extension CollectionViewController : UICollectionViewDelegateFlowLayout {
 
 }
 
+//MARK: actionSheetExtension
+extension CollectionViewController {
+    //actionSheetFunc
+    func actionSheetFunc(_ index: Int) {
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            debugPrint("Item Deleted")
+        })
+        let changeImageAction = UIAlertAction(title: "Choose Image from Gallery", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            debugPrint("Chose Image From Gallery")
+            
+            debugPrint("Button change image from gallery are pressed")
+            let image = UIImagePickerController()
+            image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            image.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            image.allowsEditing = false
+            self.currentIndexPhoto = index
+            self.present(image,animated: true) {
+                //after complete process
+            }
+            
+        })
+        
+        let takeAPicture = UIAlertAction(title: "Take a picture", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            debugPrint("Take a Picture")
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        
+        optionMenu.addAction(deleteAction)
+        optionMenu.addAction(changeImageAction)
+        optionMenu.addAction(takeAPicture)
+        optionMenu.addAction(cancelAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    //get image and assign to contact`s atribute
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            contact.receiveImageChangeAndSave(image, currentIndexPhoto)
+        }
+        self.dismiss(animated: true, completion: nil)
+        collectionContacts.reloadData()
+        
+    }
+}
 

@@ -131,29 +131,41 @@
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yBK-9Y-6qs">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yBK-9Y-6qs">
                                             <rect key="frame" x="1" y="0.0" width="200" height="149"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="200" id="IKK-nd-0dx"/>
+                                                <constraint firstAttribute="height" constant="149" id="rb5-nG-YAx"/>
+                                            </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgp-rD-Jqd">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgp-rD-Jqd">
                                             <rect key="frame" x="28" y="149" width="143" height="31"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="143" id="8Zp-p3-1Hf"/>
+                                                <constraint firstAttribute="height" constant="31" id="vRy-Ct-v45"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hBF-M8-owR">
-                                            <rect key="frame" x="1" y="0.0" width="200" height="149"/>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Qj-za-F0w">
+                                            <rect key="frame" x="1" y="0.0" width="199" height="149"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <connections>
-                                                <action selector="contactChangePhoto:" destination="TG9-8R-90G" eventType="touchUpInside" id="HOQ-Iu-bBL"/>
+                                                <action selector="actionSheet:" destination="TG9-8R-90G" eventType="touchUpInside" id="PCg-eF-4N1"/>
                                             </connections>
                                         </button>
                                     </subviews>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="yBK-9Y-6qs" firstAttribute="centerX" secondItem="MsN-l5-s31" secondAttribute="centerX" constant="1" id="Fne-hp-uW2"/>
+                                    <constraint firstItem="Dgp-rD-Jqd" firstAttribute="centerX" secondItem="MsN-l5-s31" secondAttribute="centerX" id="KwT-XZ-VGl"/>
+                                    <constraint firstItem="Dgp-rD-Jqd" firstAttribute="centerY" secondItem="MsN-l5-s31" secondAttribute="centerY" constant="64.5" id="WSu-9L-djx"/>
+                                    <constraint firstItem="yBK-9Y-6qs" firstAttribute="centerY" secondItem="MsN-l5-s31" secondAttribute="centerY" constant="-25.5" id="vRW-nX-VGK"/>
+                                </constraints>
                                 <size key="customSize" width="200" height="200"/>
                                 <connections>
-                                    <outlet property="contactChangePhoto" destination="hBF-M8-owR" id="0lt-lb-Ye1"/>
+                                    <outlet property="actionSheet" destination="0Qj-za-F0w" id="WlN-hI-pHE"/>
                                     <outlet property="contactName" destination="Dgp-rD-Jqd" id="rsq-BF-idv"/>
                                     <outlet property="contactPhoto" destination="yBK-9Y-6qs" id="MXk-us-InK"/>
                                 </connections>
@@ -195,7 +207,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gq9-WB-huU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1096.8" y="99.400299850074973"/>
+            <point key="canvasLocation" x="1096.5" y="98.5"/>
         </scene>
         <!--Add Or Change Data Contact-->
         <scene sceneID="n0R-vl-e8a">
