@@ -56,6 +56,12 @@ class Contact {
         saveDataOnJSONFile(contactPhotos, "ContactBook", "json")
     }
     
+    func deleteContact (index: Int) {
+        contactPhotos = receiveObjectFromJSON()
+        contactPhotos.remove(at: index)
+        saveDataOnJSONFile(contactPhotos, "ContactBook", "json")
+    }
+    
     func searchContactForTerm(_ searchTerm: String, completion : @escaping (_ results: ContactSearchResults?, _ error: Error?) -> Void) {
         
         //receiveobjectfrom JSON

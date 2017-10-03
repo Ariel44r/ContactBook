@@ -8,13 +8,12 @@
 
 import UIKit
 
-class viewControllerTableView: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+class viewControllerTableView: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     fileprivate let reuseIdentifier: String = "ContactTableViewCell"
     fileprivate var searches = [ContactSearchResults]()
     fileprivate let contact = Contact()
-    fileprivate let currentIndexPhoto: Int = 0
-    
+    fileprivate var currentIndexPhoto: Int = 0
     //MARK: actionsAndOutlets
     
     //tableViewOutlet
@@ -25,6 +24,10 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
     
     @IBOutlet weak var textfieldSearch: UITextField!
 
+    @IBAction func actionSheet(_ sender: Any) {
+        actionSheetFunc((sender as AnyObject).tag)
+    }
+    
     
   
     @IBAction func addContact(_ sender: Any) {
@@ -146,9 +149,83 @@ extension viewControllerTableView {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! tableViewCell
         let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.labelContact.text = contactPhoto.name
+        cell.actionSheet.tag = indexPath.row
         cell.UIImageContact.image = contactPhoto.getImageFromPathWithID(indexPath.row)
+        cell.actionSheet.addTarget(self, action: #selector(viewControllerTableView.actionSheet(_:)), for: UIControlEvents.touchUpInside)
         return cell
         
     }
     
 }
+
+//MARK: actionSheetExtension
+extension viewControllerTableView {
+    //actionSheetFunc
+    func actionSheetFunc(_ index: Int) {
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+        
+        let changeImageAction = UIAlertAction(title: "Choose Image from Gallery", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            debugPrint("Chose Image From Gallery")
+            
+            debugPrint("Button change image from gallery are pressed")
+            let image = UIImagePickerController()
+            image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            image.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            image.allowsEditing = false
+            self.currentIndexPhoto = index
+            self.present(image,animated: true) {
+                //after complete process
+            }
+            
+        })
+        
+        let takeAPicture = UIAlertAction(title: "Take a picture", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            debugPrint("Take a Picture")
+        })
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+            (alert: UIAlertAction!) -> Void in
+            debugPrint("Item Deleted")
+            self.contact.deleteContact(index: index)
+            self.contact.searchContactForTerm("") {
+                results, error in
+                if let error = error {
+                    debugPrint("Error searching \(error)")
+                    return
+                }
+                if let results = results {
+                    debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
+                    self.searches.insert(results, at: 0)
+                    self.tableViewContacts.reloadData()
+                }
+            }
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        
+        
+        optionMenu.addAction(changeImageAction)
+        optionMenu.addAction(takeAPicture)
+        optionMenu.addAction(deleteAction)
+        optionMenu.addAction(cancelAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    //get image and assign to contact`s atribute
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            contact.receiveImageChangeAndSave(image, currentIndexPhoto)
+        }
+        self.dismiss(animated: true, completion: nil)
+        tableViewContacts.reloadData()
+        
+    }
+}
+

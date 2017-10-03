@@ -117,12 +117,14 @@ extension CollectionViewController: UITextFieldDelegate {
 //MARK: UICollectionViewDataSource
 extension CollectionViewController {
     
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return searches.count
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searches[section].searchResults.count
+        var items: Int = 0
+        if searches.count > 0 {
+            items = searches[section].searchResults.count
+        } else {
+            items = searches.count
+        }
+        return items
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -164,10 +166,6 @@ extension CollectionViewController {
     func actionSheetFunc(_ index: Int) {
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
         
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
-            (alert: UIAlertAction!) -> Void in
-            debugPrint("Item Deleted")
-        })
         let changeImageAction = UIAlertAction(title: "Choose Image from Gallery", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             debugPrint("Chose Image From Gallery")
@@ -187,6 +185,25 @@ extension CollectionViewController {
         let takeAPicture = UIAlertAction(title: "Take a picture", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             debugPrint("Take a Picture")
+        })
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+            (alert: UIAlertAction!) -> Void in
+            debugPrint("Item Deleted")
+            self.contact.deleteContact(index: index)
+            self.contact.searchContactForTerm("") {
+                results, error in
+                if let error = error {
+                    debugPrint("Error searching \(error)")
+                    return
+                }
+                if let results = results {
+                    debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
+                    self.searches.insert(results, at: 0)
+                    
+                    self.collectionContacts.reloadData()
+                }
+            }
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
