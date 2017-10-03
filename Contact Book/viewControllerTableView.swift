@@ -10,7 +10,6 @@ import UIKit
 
 class viewControllerTableView: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    
     fileprivate let reuseIdentifier: String = "ContactTableViewCell"
     fileprivate var searches = [ContactSearchResults]()
     fileprivate let contact = Contact()
@@ -25,9 +24,17 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
     
     
     @IBOutlet weak var textfieldSearch: UITextField!
+
     
-    @IBAction func buttonSearch(_ sender: Any) {
-        let search: Bool = textFieldShouldReturn(textfieldSearch)
+  
+    @IBAction func addContact(_ sender: Any) {
+        self.performSegue(withIdentifier: "addContact", sender: nil)
+        tableViewContacts.reloadData()
+    }
+    
+    @IBAction func goToCollectionController(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+        //self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -82,13 +89,21 @@ private extension viewControllerTableView {
 //MARK: UITextFieldDelegate
 extension viewControllerTableView: UITextFieldDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         textField.addSubview(activityIndicator)
         activityIndicator.frame = textField.bounds
         activityIndicator.startAnimating()
         
-        contact.searchContactForTerm(textField.text!) {
+        
+        var newText:String
+        if(string != ""){
+             newText = textField.text! + string
+        }else{
+            newText = textField.text!.substring(to: textField.text!.index(before: textField.text!.endIndex))
+        }
+        
+        contact.searchContactForTerm(newText) {
             results, error in
             
             activityIndicator.removeFromSuperview()
@@ -106,8 +121,8 @@ extension viewControllerTableView: UITextFieldDelegate {
             }
         }
         
-        textField.text = nil
-        textField.resignFirstResponder()
+        //textField.text = nil
+        //textField.resignFirstResponder()
         return true
     }
     

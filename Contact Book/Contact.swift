@@ -62,7 +62,7 @@ class Contact {
         let receiveFromJSON = receiveObjectFromJSON()
         var searchContactForName = [ContactPhoto]()        //SearchContactForName
         
-        if searchTerm == "*" {
+        if searchTerm == "" {
             searchContactForName = receiveFromJSON
         } else {
             for currentContact in receiveFromJSON {

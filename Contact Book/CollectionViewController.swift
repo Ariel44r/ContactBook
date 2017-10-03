@@ -22,6 +22,7 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     
     //MARK: Actions&Outlets
     
+    
     //collectionViewOutlet
     @IBOutlet var collectionContacts: UICollectionView!
     
@@ -74,13 +75,21 @@ private extension CollectionViewController {
 //MARK: UITextFieldDelegate
 extension CollectionViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         textField.addSubview(activityIndicator)
         activityIndicator.frame = textField.bounds
         activityIndicator.startAnimating()
         
-        contact.searchContactForTerm(textField.text!) {
+        
+        var newText:String
+        if(string != ""){
+            newText = textField.text! + string
+        }else{
+            newText = textField.text!.substring(to: textField.text!.index(before: textField.text!.endIndex))
+        }
+        
+        contact.searchContactForTerm(newText) {
             results, error in
             
             activityIndicator.removeFromSuperview()
@@ -98,8 +107,8 @@ extension CollectionViewController: UITextFieldDelegate {
             }
         }
         
-        textField.text = nil
-        textField.resignFirstResponder()
+        //textField.text = nil
+        //textField.resignFirstResponder()
         return true
     }
     
@@ -155,7 +164,7 @@ extension CollectionViewController {
     func actionSheetFunc(_ index: Int) {
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
         
-        let deleteAction = UIAlertAction(title: "Delete", style: .default, handler: {
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
             (alert: UIAlertAction!) -> Void in
             debugPrint("Item Deleted")
         })
@@ -185,9 +194,10 @@ extension CollectionViewController {
             print("Cancelled")
         })
         
-        optionMenu.addAction(deleteAction)
+        
         optionMenu.addAction(changeImageAction)
         optionMenu.addAction(takeAPicture)
+        optionMenu.addAction(deleteAction)
         optionMenu.addAction(cancelAction)
         
         self.present(optionMenu, animated: true, completion: nil)
