@@ -65,6 +65,7 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
         if contactPhoto?.cellPhone != nil {
             cellPhoneContactLabel.text = contactPhoto!.cellPhone
         }
+        debugPrint("name: \(String(describing: contactPhoto?.name)), ID: \(String(describing: contactPhoto?.ID)), imagePath: \(String(describing: contactPhoto?.imagePath))")
         
     }
     
@@ -134,6 +135,7 @@ extension ContactDetailViewController {
         
         self.present(optionMenu, animated: true, completion: nil)
     }
+    
     //get image and assign to contact`s atribute
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         

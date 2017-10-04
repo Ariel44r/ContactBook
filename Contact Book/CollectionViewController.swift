@@ -18,7 +18,6 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     fileprivate let contact = Contact()
     fileprivate let itemsPerRow: CGFloat = 2
     var currentIndexPhoto: Int = 0
-    var contactPhotosArray = [ContactPhoto]()
     
     //MARK: Actions&Outlets
     
@@ -53,7 +52,6 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
                 self.collectionContacts.reloadData()
             }
         }
-        contactPhotosArray = contact.receiveObjectFromJSON()
     }
 }
 
@@ -133,8 +131,7 @@ extension CollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ContactPhotoCell
-        let contactPhoto = contactPhotosArray[indexPath.item]
-        //let contactPhoto = photoForIndexPath(indexPath: indexPath)
+        let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.backgroundColor = UIColor.white
         cell.contactPhoto.image = contactPhoto.getImageFromPathWithID(indexPath.item)
         //cell.actionSheet.addTarget(self, action: #selector(CollectionViewController.actionSheet(_:)), for: UIControlEvents.touchUpInside)

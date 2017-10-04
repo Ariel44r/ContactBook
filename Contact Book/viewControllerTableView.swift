@@ -14,8 +14,8 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
     fileprivate var searches = [ContactSearchResults]()
     fileprivate let contact = Contact()
     fileprivate var currentIndexPhoto: Int = 0
-    var contactPhososArray = [ContactPhoto]()
-    
+    var currentIndexPhotoItem = 0
+    var contactPhotoArray = [ContactPhoto]()
     //MARK: actionsAndOutlets
     
     //tableViewOutlet
@@ -38,6 +38,8 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        contactPhotoArray = contact.receiveObjectFromJSON()
+        tableViewContacts.reloadData()
         // Do any additional setup after loading the view.
         contact.deployAllContatcsOnJson() {
             results, error in
@@ -52,7 +54,6 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
                 self.tableViewContacts.reloadData()
             }
         }
-        contactPhososArray = contact.receiveObjectFromJSON()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -122,7 +123,7 @@ extension viewControllerTableView: UITextFieldDelegate {
             let detailVC = segue.destination as! ContactDetailViewController
             detailVC.contactPhoto = contactPhoto
             let sendIndex = segue.destination as! ContactDetailViewController
-            sendIndex.index = currentIndexPhoto
+            sendIndex.index = currentIndexPhotoItem
         }
     }
     
@@ -144,7 +145,7 @@ extension viewControllerTableView {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! tableViewCell
-        let contactPhoto = contactPhososArray[indexPath.row]
+        let contactPhoto = contactPhotoArray[indexPath.item]
         //let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.labelContact.text = contactPhoto.name
         //cell.actionSheet.tag = indexPath.row
@@ -157,7 +158,8 @@ extension viewControllerTableView {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let contactPhoto = photoForIndexPath(indexPath: indexPath)
         self.performSegue(withIdentifier: "tableContactDetail", sender: contactPhoto)
-        currentIndexPhoto = indexPath.row
+        currentIndexPhotoItem = indexPath.row
+        
     }
     
 }

@@ -271,7 +271,7 @@
                         <barButtonItem key="leftBarButtonItem" title="List" id="ZcA-nr-Hb4">
                             <connections>
                                 <action selector="segueTableView:" destination="TG9-8R-90G" id="dhR-vl-k2S"/>
-                                <segue destination="SbT-Af-hqh" kind="modal" identifier="segueTableView" id="uQQ-8z-rGK"/>
+                                <segue destination="SbT-Af-hqh" kind="custom" identifier="segueTableView" customClass="CustomSegue" customModule="Contact_Book" customModuleProvider="target" id="uQQ-8z-rGK"/>
                             </connections>
                         </barButtonItem>
                         <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="center" minimumFontSize="17" id="dYe-v9-thN">
