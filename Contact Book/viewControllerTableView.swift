@@ -14,6 +14,7 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
     fileprivate var searches = [ContactSearchResults]()
     fileprivate let contact = Contact()
     fileprivate var currentIndexPhoto: Int = 0
+    var contactPhososArray = [ContactPhoto]()
     
     //MARK: actionsAndOutlets
     
@@ -51,6 +52,7 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
                 self.tableViewContacts.reloadData()
             }
         }
+        contactPhososArray = contact.receiveObjectFromJSON()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -142,7 +144,8 @@ extension viewControllerTableView {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! tableViewCell
-        let contactPhoto = photoForIndexPath(indexPath: indexPath)
+        let contactPhoto = contactPhososArray[indexPath.row]
+        //let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.labelContact.text = contactPhoto.name
         //cell.actionSheet.tag = indexPath.row
         cell.UIImageContact.image = contactPhoto.getImageFromPathWithID(indexPath.row)
