@@ -80,7 +80,7 @@
         <!--View Controller Table View-->
         <scene sceneID="dCV-tX-60N">
             <objects>
-                <viewController id="SbT-Af-hqh" customClass="viewControllerTableView" customModule="Contact_Book" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="viewControllerTableView" id="SbT-Af-hqh" customClass="viewControllerTableView" customModule="Contact_Book" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aBb-RB-af6"/>
                         <viewControllerLayoutGuide type="bottom" id="jas-pN-ccZ"/>
@@ -270,8 +270,7 @@
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="List" id="ZcA-nr-Hb4">
                             <connections>
-                                <action selector="segueTableView:" destination="TG9-8R-90G" id="dhR-vl-k2S"/>
-                                <segue destination="SbT-Af-hqh" kind="custom" identifier="segueTableView" customClass="CustomSegue" customModule="Contact_Book" customModuleProvider="target" id="uQQ-8z-rGK"/>
+                                <action selector="segueTableView:" destination="TG9-8R-90G" id="AJT-8A-T00"/>
                             </connections>
                         </barButtonItem>
                         <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="center" minimumFontSize="17" id="dYe-v9-thN">
@@ -294,6 +293,7 @@
                         <outlet property="collectionContacts" destination="QUI-Yh-9Ek" id="75a-Mh-f0e"/>
                         <segue destination="o5C-LN-35Z" kind="modal" identifier="segueDetail" id="Tm1-wM-4sD"/>
                         <segue destination="8re-n5-Ka3" kind="modal" identifier="collectionContactDetail" id="Pwh-O5-3oG"/>
+                        <segue destination="SbT-Af-hqh" kind="custom" identifier="segueTableView" customClass="CustomSegue" customModule="Contact_Book" customModuleProvider="target" id="7lS-Q1-8KW"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gq9-WB-huU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -435,7 +435,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="8Er-NF-NDI"/>
-        <segue reference="TCG-dd-Myf"/>
+        <segue reference="Tm1-wM-4sD"/>
+        <segue reference="Pwh-O5-3oG"/>
     </inferredMetricsTieBreakers>
 </document>

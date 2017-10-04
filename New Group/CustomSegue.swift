@@ -11,6 +11,7 @@ import UIKit
 class CustomSegue: UIStoryboardSegue {
     
     override func perform() {
+        //self.destination.modalTransitionStyle = .flipHorizontal
         scale()
     }
     

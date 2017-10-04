@@ -32,6 +32,11 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     
     @IBAction func segueTableView(_ sender: Any) {
         self.performSegue(withIdentifier: "segueTableView", sender: nil)
+        
+        /*let vc = self.storyboard?.instantiateViewController(withIdentifier: "viewControllerTableView") as! viewControllerTableView
+        vc.modalTransitionStyle  = .flipHorizontal
+        //vc.modalPresentationStyle = .custom
+        self.present(vc, animated: true, completion: nil)*/
     }
     
     override func viewDidLoad() {
