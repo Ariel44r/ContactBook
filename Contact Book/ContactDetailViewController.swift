@@ -21,9 +21,6 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
         self.dismiss(animated: true, completion: nil)
     }
     
-    
-    
-    
     //MARK: OutletsAndActions
     
     @IBAction func actionSheet(_ sender: Any) {
@@ -120,7 +117,8 @@ extension ContactDetailViewController {
                 if let results = results {
                     self.searches.insert(results, at: 0)
                 }
-            }        })
+            }
+        })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in

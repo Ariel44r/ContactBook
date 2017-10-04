@@ -15,7 +15,6 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
     fileprivate let contact = Contact()
     fileprivate var currentIndexPhoto: Int = 0
     var currentIndexPhotoItem = 0
-    var contactPhotoArray = [ContactPhoto]()
     //MARK: actionsAndOutlets
     
     //tableViewOutlet
@@ -38,8 +37,6 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        contactPhotoArray = contact.receiveObjectFromJSON()
-        tableViewContacts.reloadData()
         // Do any additional setup after loading the view.
         contact.deployAllContatcsOnJson() {
             results, error in
@@ -145,8 +142,7 @@ extension viewControllerTableView {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! tableViewCell
-        let contactPhoto = contactPhotoArray[indexPath.item]
-        //let contactPhoto = photoForIndexPath(indexPath: indexPath)
+        let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.labelContact.text = contactPhoto.name
         //cell.actionSheet.tag = indexPath.row
         cell.UIImageContact.image = contactPhoto.getImageFromPathWithID(indexPath.row)
