@@ -26,12 +26,6 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     //collectionViewOutlet
     @IBOutlet var collectionContacts: UICollectionView!
     
-   //actionSheet
-    @IBAction func actionSheet(_ sender: Any) {
-        actionSheetFunc((sender as AnyObject).tag)
-    }
-    
-    
     @IBAction func showDetail(_ sender: Any) {
         self.performSegue(withIdentifier: "segueDetail", sender: nil)
         collectionContacts.reloadData()
@@ -111,6 +105,14 @@ extension CollectionViewController: UITextFieldDelegate {
         return true
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "collectionContactDetail" {
+            let contactPhoto = sender as! ContactPhoto
+            let detailVC = segue.destination as! ContactDetailViewController
+            detailVC.contactPhoto = contactPhoto
+        }
+    }
+    
 }
 
 //MARK: UICollectionViewDataSource
@@ -131,10 +133,15 @@ extension CollectionViewController {
         let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.backgroundColor = UIColor.white
         cell.contactPhoto.image = contactPhoto.getImageFromPathWithID(indexPath.item)
-        cell.actionSheet.addTarget(self, action: #selector(CollectionViewController.actionSheet(_:)), for: UIControlEvents.touchUpInside)
-        cell.actionSheet.tag = indexPath.item
+        //cell.actionSheet.addTarget(self, action: #selector(CollectionViewController.actionSheet(_:)), for: UIControlEvents.touchUpInside)
+        //cell.actionSheet.tag = indexPath.item
         cell.contactName.text = contactPhoto.name
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let contactPhoto = photoForIndexPath(indexPath: indexPath)
+        self.performSegue(withIdentifier: "collectionContactDetail", sender: contactPhoto)
     }
     
 }

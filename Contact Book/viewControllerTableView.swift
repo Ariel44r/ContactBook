@@ -23,12 +23,6 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
     
     
     @IBOutlet weak var textfieldSearch: UITextField!
-
-    @IBAction func actionSheet(_ sender: Any) {
-        actionSheetFunc((sender as AnyObject).tag)
-    }
-    
-    
   
     @IBAction func addContact(_ sender: Any) {
         self.performSegue(withIdentifier: "addContact", sender: nil)
@@ -128,6 +122,15 @@ extension viewControllerTableView: UITextFieldDelegate {
         //textField.resignFirstResponder()
         return true
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "tableContactDetail" {
+            let contactPhoto = sender as! ContactPhoto
+            let detailVC = segue.destination as! ContactDetailViewController
+            detailVC.contactPhoto = contactPhoto
+            let sendIndex = segue.destination as! ContactDetailViewController
+            sendIndex.index = currentIndexPhoto
+        }
+    }
     
 }
 
@@ -149,11 +152,17 @@ extension viewControllerTableView {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! tableViewCell
         let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.labelContact.text = contactPhoto.name
-        cell.actionSheet.tag = indexPath.row
+        //cell.actionSheet.tag = indexPath.row
         cell.UIImageContact.image = contactPhoto.getImageFromPathWithID(indexPath.row)
-        cell.actionSheet.addTarget(self, action: #selector(viewControllerTableView.actionSheet(_:)), for: UIControlEvents.touchUpInside)
+        //cell.actionSheet.addTarget(self, action: #selector(viewControllerTableView.actionSheet(_:)), for: UIControlEvents.touchUpInside)
+        
         return cell
         
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let contactPhoto = photoForIndexPath(indexPath: indexPath)
+        self.performSegue(withIdentifier: "tableContactDetail", sender: contactPhoto)
+        currentIndexPhoto = indexPath.row
     }
     
 }

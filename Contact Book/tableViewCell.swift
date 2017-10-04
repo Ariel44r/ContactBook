@@ -14,7 +14,7 @@ class tableViewCell: UITableViewCell {
     
     @IBOutlet weak var UIImageContact: UIImageView!
     @IBOutlet weak var labelContact: UILabel!
-    @IBOutlet weak var actionSheet: UIButton!
+    @IBOutlet weak var contactDetail: UIButton!
     
     
     override func awakeFromNib() {

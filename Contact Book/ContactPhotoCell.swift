@@ -12,6 +12,6 @@ class ContactPhotoCell: UICollectionViewCell {
     
     @IBOutlet weak var contactPhoto: UIImageView!
     @IBOutlet weak var contactName: UILabel!
-    @IBOutlet weak var actionSheet: UIButton!
+    @IBOutlet weak var contactDetail: UIButton!
     
 }
