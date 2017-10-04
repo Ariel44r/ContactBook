@@ -110,7 +110,8 @@ extension CollectionViewController: UITextFieldDelegate {
             let contactPhoto = sender as! ContactPhoto
             let detailVC = segue.destination as! ContactDetailViewController
             detailVC.contactPhoto = contactPhoto
-        }
+            let sendIndex = segue.destination as! ContactDetailViewController
+            sendIndex.index = currentIndexPhoto        }
     }
     
 }
@@ -142,6 +143,7 @@ extension CollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let contactPhoto = photoForIndexPath(indexPath: indexPath)
         self.performSegue(withIdentifier: "collectionContactDetail", sender: contactPhoto)
+        currentIndexPhoto = indexPath.item
     }
     
 }
