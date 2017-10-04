@@ -30,7 +30,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ddz-Fn-PWE">
-                                <rect key="frame" x="15" y="40" width="34" height="30"/>
+                                <rect key="frame" x="15" y="84" width="34" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="34" id="NXi-69-rRd"/>
                                     <constraint firstAttribute="height" constant="30" id="bh0-ux-RAm"/>
@@ -41,7 +41,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0u-wr-3V5">
-                                <rect key="frame" x="321" y="40" width="30" height="30"/>
+                                <rect key="frame" x="321" y="84" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="4JF-Vv-o6s"/>
                                     <constraint firstAttribute="height" constant="30" id="sh2-J4-EvB"/>
@@ -124,7 +124,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="su7-r8-2eu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2696.8000000000002" y="-99.400299850074973"/>
+            <point key="canvasLocation" x="2802" y="-99"/>
         </scene>
         <!--View Controller Table View-->
         <scene sceneID="dCV-tX-60N">
@@ -245,9 +245,6 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="jnk-mw-E5O">
-                        <nil key="title"/>
-                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableViewContacts" destination="xbW-yV-v3F" id="j1o-6b-38a"/>
@@ -488,6 +485,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="8Er-NF-NDI"/>
-        <segue reference="sUa-Me-lP7"/>
+        <segue reference="TIj-M6-JGb"/>
     </inferredMetricsTieBreakers>
 </document>

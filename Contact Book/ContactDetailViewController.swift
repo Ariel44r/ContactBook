@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactDetailViewController: UIViewController {
+class ContactDetailViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     //MARK: InstancesAndVariables
     var contact = Contact()
@@ -27,7 +27,8 @@ class ContactDetailViewController: UIViewController {
     //MARK: OutletsAndActions
     
     @IBAction func actionSheet(_ sender: Any) {
-        actionSheetFunc(index!)
+        actionSheetFunc(Int((contactPhoto?.ID)!)!)
+        print("INDEX: " + (contactPhoto?.ID)!)
     }
     
     
@@ -92,7 +93,13 @@ extension ContactDetailViewController {
         let changeImageAction = UIAlertAction(title: "Choose Image from Gallery", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             debugPrint("Chose Image From Gallery")
-        })
+            let image = UIImagePickerController()
+            image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            image.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            image.allowsEditing = false
+            self.present(image,animated: true) {
+                //after complete process
+            }        })
         
         let takeAPicture = UIAlertAction(title: "Take a picture", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -102,7 +109,17 @@ extension ContactDetailViewController {
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
             (alert: UIAlertAction!) -> Void in
             debugPrint("Item Deleted")
-        })
+            self.contact.deleteContact(index: index)
+            self.contact.searchContactForTerm("") {
+                results, error in
+                if let error = error {
+                    debugPrint("Error searching \(error)")
+                    return
+                }
+                if let results = results {
+                    self.searches.insert(results, at: 0)
+                }
+            }        })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -117,4 +134,11 @@ extension ContactDetailViewController {
         
         self.present(optionMenu, animated: true, completion: nil)
     }
-}
+    //get image and assign to contact`s atribute
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            contact.receiveImageChangeAndSave(image, index!)
+        }
+        self.dismiss(animated: true, completion: nil)        
+    }}

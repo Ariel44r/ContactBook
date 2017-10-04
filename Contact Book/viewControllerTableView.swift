@@ -14,13 +14,13 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
     fileprivate var searches = [ContactSearchResults]()
     fileprivate let contact = Contact()
     fileprivate var currentIndexPhoto: Int = 0
+    
     //MARK: actionsAndOutlets
     
     //tableViewOutlet
     @IBOutlet weak var tableViewContacts: UITableView!
     
     @IBOutlet weak var viewHeader: UIView!
-    
     
     @IBOutlet weak var textfieldSearch: UITextField!
   
@@ -34,19 +34,16 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
         //self.navigationController?.popViewController(animated: true)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         contact.deployAllContatcsOnJson() {
             results, error in
-            
             if let error = error {
                 debugPrint("Error searching \(error)")
                 return
             }
-            
             if let results = results {
                 debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
                 self.searches.insert(results, at: 0)
@@ -91,8 +88,6 @@ extension viewControllerTableView: UITextFieldDelegate {
         textField.addSubview(activityIndicator)
         activityIndicator.frame = textField.bounds
         activityIndicator.startAnimating()
-        
-        
         var newText:String
         if(string != ""){
              newText = textField.text! + string
@@ -117,9 +112,6 @@ extension viewControllerTableView: UITextFieldDelegate {
                 self.tableViewContacts.reloadData()
             }
         }
-        
-        //textField.text = nil
-        //textField.resignFirstResponder()
         return true
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -165,75 +157,5 @@ extension viewControllerTableView {
         currentIndexPhoto = indexPath.row
     }
     
-}
-
-//MARK: actionSheetExtension
-extension viewControllerTableView {
-    //actionSheetFunc
-    func actionSheetFunc(_ index: Int) {
-        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
-        
-        let changeImageAction = UIAlertAction(title: "Choose Image from Gallery", style: .default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            debugPrint("Chose Image From Gallery")
-            
-            debugPrint("Button change image from gallery are pressed")
-            let image = UIImagePickerController()
-            image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
-            image.sourceType = UIImagePickerControllerSourceType.photoLibrary
-            image.allowsEditing = false
-            self.currentIndexPhoto = index
-            self.present(image,animated: true) {
-                //after complete process
-            }
-            
-        })
-        
-        let takeAPicture = UIAlertAction(title: "Take a picture", style: .default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            debugPrint("Take a Picture")
-        })
-        
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
-            (alert: UIAlertAction!) -> Void in
-            debugPrint("Item Deleted")
-            self.contact.deleteContact(index: index)
-            self.contact.searchContactForTerm("") {
-                results, error in
-                if let error = error {
-                    debugPrint("Error searching \(error)")
-                    return
-                }
-                if let results = results {
-                    self.searches.insert(results, at: 0)
-                    self.tableViewContacts.reloadData()
-                }
-            }
-        })
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
-            (alert: UIAlertAction!) -> Void in
-            print("Cancelled")
-        })
-        
-        
-        optionMenu.addAction(changeImageAction)
-        optionMenu.addAction(takeAPicture)
-        optionMenu.addAction(deleteAction)
-        optionMenu.addAction(cancelAction)
-        
-        self.present(optionMenu, animated: true, completion: nil)
-    }
-    
-    //get image and assign to contact`s atribute
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            contact.receiveImageChangeAndSave(image, currentIndexPhoto)
-        }
-        self.dismiss(animated: true, completion: nil)
-        tableViewContacts.reloadData()
-        
-    }
 }
 
