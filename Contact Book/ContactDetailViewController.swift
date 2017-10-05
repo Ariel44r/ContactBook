@@ -15,6 +15,7 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
     fileprivate var searches = [ContactSearchResults]()
     var contactPhoto: ContactPhoto?
     var index: Int?
+    var indexImage: Int?
     
     
     @IBAction func back(_ sender: Any) {
@@ -62,7 +63,7 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
         if contactPhoto?.cellPhone != nil {
             cellPhoneContactLabel.text = contactPhoto!.cellPhone
         }
-        debugPrint("name: \(String(describing: contactPhoto?.name)), ID: \(String(describing: contactPhoto?.ID)), imagePath: \(String(describing: contactPhoto?.imagePath))")
+        debugPrint("name: \(String(describing: contactPhoto?.name)), ID: \(String(describing: contactPhoto?.ID))")
         
     }
     
@@ -85,19 +86,23 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
 }
 
 extension ContactDetailViewController {
+    
+    
     func actionSheetFunc(_ index: Int) {
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
         
         let changeImageAction = UIAlertAction(title: "Choose Image from Gallery", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
-            debugPrint("Chose Image From Gallery")
+            debugPrint("Chose Image From Gallery whit INDEX \(index)")
+            self.indexImage = index
             let image = UIImagePickerController()
             image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
             image.sourceType = UIImagePickerControllerSourceType.photoLibrary
             image.allowsEditing = false
             self.present(image,animated: true) {
                 //after complete process
-            }        })
+            }
+        })
         
         let takeAPicture = UIAlertAction(title: "Take a picture", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -138,7 +143,10 @@ extension ContactDetailViewController {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            contact.receiveImageChangeAndSave(image, index!)
+            contact.receiveImageChangeAndSave(image, indexImage!)
+            print("SAVE PHOTO WHIT ID: \(indexImage!)")
         }
         self.dismiss(animated: true, completion: nil)        
-    }}
+    }
+    
+}

@@ -44,7 +44,7 @@ class Contact {
             } catch (let exception){
                 debugPrint (exception)
             }
-            
+            debugPrint("MASTER PATH: " + PATH)
         }
        
         
@@ -156,7 +156,7 @@ extension Contact {
             PATH = PATH.replacingOccurrences(of: "/ContactBook.json", with: "")
            
         }
-        debugPrint("MASTER PATH: " + PATH)
+        
         let jsonReadData: Data
         do {
             jsonReadData = try Data(contentsOf: jsonURL)
