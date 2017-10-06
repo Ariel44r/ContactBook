@@ -24,9 +24,9 @@ class ContactDataBase {
         return db!
     }
     
-    func queryDataBase (_ query: String) {
-        
-        
+    func queryDataBase (_ queryOnDB: String) {
+        let query = "SELECT * FROM Contacts where name = '\(queryOnDB)'"
+        var contactsFromDataBase = [ContactPhoto]()
         
         let db = connectToDB()
         var statement: OpaquePointer?
