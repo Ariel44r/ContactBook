@@ -11,21 +11,31 @@ import SQLite3
 
 class ContactDataBase {
     
-    func connectToDB() -> OpaquePointer {
+    func getPath() -> String {
         let dbURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         let dbPath = dbURL.appendingPathComponent("ContactBook.db")
         debugPrint("DATABASE PATH: \(dbPath.path)")
+        return dbPath.path
+    }
+    
+    func connectToDB() -> OpaquePointer {
+        let dbPath = getPath()
         var db: OpaquePointer?
-        if sqlite3_open(dbPath.path, &db) != SQLITE_OK {
+        if sqlite3_open(dbPath, &db) != SQLITE_OK {
             print("error opening database")
         } else {
-            print("login succes into Contacts database dude!")
+            print("has successfully entered into Contacts database dude!")
         }
         return db!
     }
     
-    func queryDataBase (_ queryOnDB: String) {
-        let query = "SELECT * FROM Contacts where name = '\(queryOnDB)'"
+    func queryDataBase (_ queryOnDB: String) -> [ContactPhoto] {
+        var query: String
+        if queryOnDB == "*" {
+           query = "SELECT * FROM Contacts"
+        } else {
+            query = "SELECT * FROM Contacts where name = '\(queryOnDB)'"
+        }
         var contactsFromDataBase = [ContactPhoto]()
         let db = connectToDB()
         var statement: OpaquePointer?
@@ -33,7 +43,6 @@ class ContactDataBase {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing select: \(errmsg)")
         }
-        
         while sqlite3_step(statement) == SQLITE_ROW {
             var name: String = ""
             var lastName: String = ""
@@ -74,23 +83,24 @@ class ContactDataBase {
             currentContact.setIDAndImagePath(ID, imagePath)
             contactsFromDataBase.append(currentContact)
         }
-        
         if sqlite3_finalize(statement) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error finalizing prepared statement: \(errmsg)")
         }
-        
         statement = nil
+        return contactsFromDataBase
     }
     
     func insertIntoDB (_ currentContact: ContactPhoto) {
+        currentContact.imagePath = getPath().replacingOccurrences(of: "/ContactBook.db", with: "")
         let db = connectToDB()
         var statement: OpaquePointer?
         let insert = "insert into Contacts values ('\(currentContact.name)', '\(currentContact.lastName)', '\(currentContact.cellPhone)','\(currentContact.ID)', '\(currentContact.imagePath)')"
-        
         if sqlite3_prepare_v2(db, insert, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing insert: \(errmsg)")
+        } else {
+            debugPrint("Record contact named: \(currentContact.name)")
         }
     }
     
