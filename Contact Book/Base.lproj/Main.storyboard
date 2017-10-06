@@ -370,7 +370,7 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sNn-BP-ekM">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
-                                    <navigationItem title="REG" id="6mp-xT-ZvM">
+                                    <navigationItem title="REG/EDIT" id="6mp-xT-ZvM">
                                         <barButtonItem key="leftBarButtonItem" title="back" id="ZNf-Nu-P7T">
                                             <connections>
                                                 <action selector="back:" destination="o5C-LN-35Z" id="cuQ-YD-SsG"/>
