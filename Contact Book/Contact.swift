@@ -34,7 +34,6 @@ class Contact {
     }
     
     func receiveImageChangeAndSave (_ image: UIImage, _ index: Int) {
-        
         contactPhotos = receiveObjectFromJSON()
         let fManager = FileManager()
         let pngImage = UIImagePNGRepresentation(image)
@@ -71,7 +70,6 @@ class Contact {
         //receiveobjectfrom JSON
         let receiveFromJSON = receiveObjectFromJSON()
         var searchContactForName = [ContactPhoto]()        //SearchContactForName
-        
         if searchTerm == "" {
             searchContactForName = receiveFromJSON
         } else {
@@ -81,11 +79,9 @@ class Contact {
                 }
             }
         }
-        
         OperationQueue.main.addOperation({
             completion(ContactSearchResults(searchTerm: searchTerm, searchResults: searchContactForName), nil)
         })
-        
     }
     
     func deployAllContatcsOnJson (completion : @escaping (_ results: ContactSearchResults?, _ error: Error?) -> Void) {
@@ -93,7 +89,8 @@ class Contact {
         
         OperationQueue.main.addOperation({
             completion(ContactSearchResults(searchTerm: "*", searchResults: receiveFromJSON), nil)
-        })    }
+        })
+    }
 
 }
 
@@ -102,7 +99,6 @@ class Contact {
 extension Contact {
     
     func saveDataOnJSONFile (_ contactPHoto: [ContactPhoto], _ fileName: String, _ xtension: String) {
-        
         checkForEmptyFields()
         var topLevel_: [AnyObject] = []
         for contactPhoto in contactPHoto {
@@ -113,7 +109,6 @@ extension Contact {
             contactDictionary.setValue(contactPhoto.ID, forKey: "ID")
             contactDictionary.setValue(contactPhoto.cellPhone, forKey: "cellPhone")
             contactDictionary.setValue(contactPhoto.imagePath, forKey: "imagePath")
-
             topLevel_.append(contactDictionary)
         }
         let topLevel = NSArray(array: topLevel_)
@@ -121,9 +116,6 @@ extension Contact {
             let jsonData = try JSONSerialization.data(withJSONObject: topLevel, options: .prettyPrinted)
             let fileManager = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             let fileURL = fileManager.appendingPathComponent(fileName + "." + xtension)
-            
-           
-            
             let writeString = String(data: jsonData,encoding: .ascii)
             do{
                 //Write the file
@@ -132,7 +124,6 @@ extension Contact {
                 debugPrint ("Failed to write on \(fileName).\(xtension)")
                 debugPrint(error)
             }
-            
         } catch {
             debugPrint(error.localizedDescription)
         }
@@ -144,26 +135,20 @@ extension Contact {
 //MARK: receiveObjectFromJSON
 extension Contact {
     func receiveObjectFromJSON () -> [ContactPhoto] {
-        
         var contactReceived = [ContactPhoto]()
-        
         //read the json file
         let fileManager = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let jsonURL = fileManager.appendingPathComponent("ContactBook.json")
-       
         if PATH == "" {
             PATH = jsonURL.path
             PATH = PATH.replacingOccurrences(of: "/ContactBook.json", with: "")
-           
         }
-        
         let jsonReadData: Data
         do {
             jsonReadData = try Data(contentsOf: jsonURL)
              let parsedContacts = try JSONSerialization.jsonObject(with: jsonReadData, options: .mutableContainers)
             let contacts = parsedContacts as! [[String: AnyObject]]
             for contact in contacts {
-                
                 guard let contactName = contact["name"] as? String,
                 let contactlast = contact["lastName"] as? String,
                 let contactid = contact["ID"] as? String,
@@ -178,28 +163,22 @@ extension Contact {
             debugPrint(error)
         }
        return contactReceived
-      
     }
 }
 
 //MARK: checkForEmptyFields
 extension Contact {
-    
     func checkForEmptyFields () {
         let contactPhotos = receiveObjectFromJSON()
         for indexContact in contactPhotos {
-            
             if indexContact.lastName == "" {
                 indexContact.lastName = "_"
             }
             if indexContact.cellPhone == "" {
                 indexContact.cellPhone = "_"
             }
-            
         }
-        
     }
-    
 }
 
 extension Contact {

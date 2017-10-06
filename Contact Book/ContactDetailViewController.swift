@@ -63,7 +63,6 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
         if contactPhoto?.cellPhone != nil {
             cellPhoneContactLabel.text = contactPhoto!.cellPhone
         }
-        debugPrint("name: \(String(describing: contactPhoto?.name)), ID: \(String(describing: contactPhoto?.ID))")
         
     }
     
