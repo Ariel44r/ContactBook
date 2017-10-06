@@ -94,13 +94,10 @@ class ContactDataBase {
     func insertIntoDB (_ currentContact: ContactPhoto) {
         currentContact.imagePath = getPath().replacingOccurrences(of: "/ContactBook.db", with: "")
         let db = connectToDB()
-        var statement: OpaquePointer?
         let insert = "insert into Contacts values ('\(currentContact.name)', '\(currentContact.lastName)', '\(currentContact.cellPhone)','\(currentContact.ID)', '\(currentContact.imagePath)')"
-        if sqlite3_prepare_v2(db, insert, -1, &statement, nil) != SQLITE_OK {
+        if sqlite3_exec(db, insert, nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error preparing insert: \(errmsg)")
-        } else {
-            debugPrint("Record contact named: \(currentContact.name)")
+            print("error at insert record: \(errmsg)")
         }
     }
     

@@ -20,10 +20,7 @@ class Contact {
     fileprivate var PATH = ""
     
     func receiveContactsAndAdd(contact: ContactPhoto) {
-        contact.ID = getIDForNewImage()
-        checkForEmptyFields()
-        let newContact: ContactPhoto = contact
-        contactDataBase.insertIntoDB(newContact)
+        contactDataBase.insertIntoDB(checkForEmptyFields(contact))
     }
     
     func receiveImageChangeAndSave (_ image: UIImage, _ index: Int) {
@@ -75,21 +72,21 @@ class Contact {
 
 //MARK: checkForEmptyFields
 extension Contact {
-    func checkForEmptyFields () {
-        let contactPhotos = contactDataBase.queryDataBase("*")
-        for indexContact in contactPhotos {
-            if indexContact.lastName == "" {
-                indexContact.lastName = "_"
-            }
-            if indexContact.cellPhone == "" {
-                indexContact.cellPhone = "_"
-            }
+    func checkForEmptyFields (_ currentContact: ContactPhoto) -> ContactPhoto {
+        if currentContact.lastName == "" {
+            currentContact.lastName = "_"
         }
+        if currentContact.cellPhone == "" {
+            currentContact.cellPhone = "_"
+        }
+        currentContact.ID = getIDForNewImage()
+        return currentContact
     }
 }
 
 extension Contact {
     func getIDForNewImage() -> String {
+        let contactPhotos = contactDataBase.queryDataBase("*")
         return String(contactPhotos.count)
     }
 }
