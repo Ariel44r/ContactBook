@@ -41,6 +41,13 @@ class Contact {
     
     func deleteContact (index: Int) {
         contactDataBase.deleteContactWithID(String(index))
+        let fileManager = FileManager.default
+        let PATH = contactDataBase.getPath().replacingOccurrences(of: "/ContactBook.db", with: "")
+        do {
+            try fileManager.removeItem(atPath: PATH + "/images/\(contactPhotos[index].ID).png")
+        } catch {
+            debugPrint("Somthing went wrong at remove image \(error)")
+        }
     }
     
     func searchContactForTerm(_ searchTerm: String, completion : @escaping (_ results: ContactSearchResults?, _ error: Error?) -> Void) {
