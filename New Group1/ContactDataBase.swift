@@ -101,6 +101,15 @@ class ContactDataBase {
         }
     }
     
+    func updateRecord(_ currentContact: ContactPhoto) {
+        let db = connectToDB()
+        let update = "UPDATE Contacts SET name='\(currentContact.name)', lastName='\(currentContact.lastName)', cellPhone='\(currentContact.cellPhone)' WHERE ID='1'"
+        if sqlite3_exec(db, update, nil, nil, nil) != SQLITE_OK {
+            let errmsg =  String(cString: sqlite3_errmsg(db)!)
+            print("error at update Contact: \(errmsg)")
+        }
+    }
+    
     func deleteContactWithID (_ ID: String) {
         let db = connectToDB()
         if sqlite3_exec(db, "DELETE FROM Contacts WHERE ID = '\(ID)'", nil, nil, nil) != SQLITE_OK {
