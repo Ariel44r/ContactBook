@@ -19,6 +19,7 @@ class ContactDataBase {
     }
     
     func connectToDB() -> OpaquePointer {
+        
         let dbPath = getPath()
         var db: OpaquePointer?
         if sqlite3_open(dbPath, &db) != SQLITE_OK {
