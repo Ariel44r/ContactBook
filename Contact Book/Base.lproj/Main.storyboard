@@ -79,6 +79,9 @@
                                 <state key="normal" title="Record">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="updateContact:" destination="8re-n5-Ka3" eventType="touchUpInside" id="qwB-Kh-Pa0"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kli-YD-uI7">
                                 <rect key="frame" x="78" y="85" width="218" height="210"/>
@@ -91,6 +94,9 @@
                                 <rect key="frame" x="283" y="28" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Edit"/>
+                                <connections>
+                                    <action selector="editButton:" destination="8re-n5-Ka3" eventType="touchUpInside" id="QdN-qV-Mwk"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

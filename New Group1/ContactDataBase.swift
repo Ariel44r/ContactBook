@@ -103,7 +103,7 @@ class ContactDataBase {
     
     func updateRecord(_ currentContact: ContactPhoto) {
         let db = connectToDB()
-        let update = "UPDATE Contacts SET name='\(currentContact.name)', lastName='\(currentContact.lastName)', cellPhone='\(currentContact.cellPhone)' WHERE ID='1'"
+        let update = "UPDATE Contacts SET name='\(currentContact.name)', lastName='\(currentContact.lastName)', cellPhone='\(currentContact.cellPhone)' WHERE ID='\(currentContact.ID)'"
         if sqlite3_exec(db, update, nil, nil, nil) != SQLITE_OK {
             let errmsg =  String(cString: sqlite3_errmsg(db)!)
             print("error at update Contact: \(errmsg)")

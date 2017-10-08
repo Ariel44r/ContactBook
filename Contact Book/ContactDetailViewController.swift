@@ -16,6 +16,7 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
     var contactPhoto: ContactPhoto?
     var index: Int?
     var indexImage: Int?
+    let dataBase = ContactDataBase()
     
     
     @IBAction func back(_ sender: Any) {
@@ -43,6 +44,22 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
         actionSheetFuncImage(Int((contactPhoto?.ID)!)!)
     }
     
+    @IBAction func editButton(_ sender: Any) {
+        nameTextField.isUserInteractionEnabled = true
+        lastNameTextField.isUserInteractionEnabled = true
+        cellPhonetextField.isUserInteractionEnabled = true
+    }
+    
+    @IBAction func updateContact(_ sender: Any) {
+        let currentContact = ContactPhoto(nameTextField.text!,lastNameTextField.text!,cellPhonetextField.text!)
+        let indexString: String = String(index!)
+        debugPrint("ID TO UPDATE: " + indexString)
+        currentContact.setIDAndImagePath(indexString, dataBase.getPath())
+        dataBase.updateRecord(currentContact)
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -56,12 +73,15 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
         }
         if contactPhoto?.name != nil {
             nameTextField.text = contactPhoto!.name
+            nameTextField.isUserInteractionEnabled = false
         }
         if contactPhoto?.lastName != nil {
             lastNameTextField.text = contactPhoto!.lastName
+            lastNameTextField.isUserInteractionEnabled = false
         }
         if contactPhoto?.cellPhone != nil {
             cellPhonetextField.text = contactPhoto!.cellPhone
+            cellPhonetextField.isUserInteractionEnabled = false
         }
         
     }
