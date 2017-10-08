@@ -32,16 +32,16 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
     
     @IBOutlet weak var imageContact: UIImageView!
     
-    @IBOutlet weak var nameContactlabel: UILabel!
+    @IBOutlet weak var nameTextField: UITextField!
     
-    @IBOutlet weak var lastNameContactLabel: UILabel!
+    @IBOutlet weak var lastNameTextField: UITextField!
     
-    @IBOutlet weak var cellPhoneContactLabel: UILabel!
+    @IBOutlet weak var cellPhonetextField: UITextField!
     
-    @IBAction func doneContactButton(_ sender: Any) {
-        //returnToPrevVC
+    
+    @IBAction func changeImage(_ sender: Any) {
+        actionSheetFuncImage(Int((contactPhoto?.ID)!)!)
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,13 +55,13 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
             imageContact.image = contactPhoto!.getImageFromPathWithID(index!)
         }
         if contactPhoto?.name != nil {
-            nameContactlabel.text = contactPhoto!.name
+            nameTextField.text = contactPhoto!.name
         }
         if contactPhoto?.lastName != nil {
-            lastNameContactLabel.text = contactPhoto!.lastName
+            lastNameTextField.text = contactPhoto!.lastName
         }
         if contactPhoto?.cellPhone != nil {
-            cellPhoneContactLabel.text = contactPhoto!.cellPhone
+            cellPhonetextField.text = contactPhoto!.cellPhone
         }
         
     }
@@ -84,29 +84,12 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
 
 }
 
+//MARK: actionSheets
 extension ContactDetailViewController {
     
     
     func actionSheetFunc(_ index: Int) {
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
-        
-        let changeImageAction = UIAlertAction(title: "Choose Image from Gallery", style: .default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            debugPrint("Chose Image From Gallery whit INDEX \(index)")
-            self.indexImage = index
-            let image = UIImagePickerController()
-            image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
-            image.sourceType = UIImagePickerControllerSourceType.photoLibrary
-            image.allowsEditing = false
-            self.present(image,animated: true) {
-                //after complete process
-            }
-        })
-        
-        let takeAPicture = UIAlertAction(title: "Take a picture", style: .default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            debugPrint("Take a Picture")
-        })
         
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -128,11 +111,42 @@ extension ContactDetailViewController {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
         })
+    
+        optionMenu.addAction(deleteAction)
+        optionMenu.addAction(cancelAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func actionSheetFuncImage(_ index: Int) {
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+        
+        let changeImageAction = UIAlertAction(title: "Choose Image from Gallery", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            debugPrint("Chose Image From Gallery whit INDEX \(index)")
+            self.indexImage = index
+            let image = UIImagePickerController()
+            image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            image.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            image.allowsEditing = false
+            self.present(image,animated: true) {
+                //after complete process
+            }
+        })
+        
+        let takeAPicture = UIAlertAction(title: "Take a picture", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            debugPrint("Take a Picture")
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
         
         
         optionMenu.addAction(changeImageAction)
         optionMenu.addAction(takeAPicture)
-        optionMenu.addAction(deleteAction)
         optionMenu.addAction(cancelAction)
         
         self.present(optionMenu, animated: true, completion: nil)
@@ -145,7 +159,6 @@ extension ContactDetailViewController {
             contact.receiveImageChangeAndSave(image, indexImage!)
             print("SAVE PHOTO WHIT ID: \(indexImage!)")
         }
-        self.dismiss(animated: true, completion: nil)        
+        self.dismiss(animated: true, completion: nil)
     }
-    
 }
