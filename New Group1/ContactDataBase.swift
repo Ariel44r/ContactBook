@@ -26,6 +26,10 @@ class ContactDataBase {
             print("error opening database")
         } else {
             print("has successfully entered into Contacts database dude!")
+            if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS Contacts(name VARCHAR(60) NOT NULL, lastName varchar(60) NOT NULL, cellPhone VARCHAR(16) NOT NULL, ID VARCHAR(5) NOT NULL, imagePath VARCHAR(200) NOT NULL);", nil, nil, nil) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("error creating table: \(errmsg)")
+            }
         }
         return db!
     }
@@ -115,7 +119,7 @@ class ContactDataBase {
         let db = connectToDB()
         if sqlite3_exec(db, "DELETE FROM Contacts WHERE ID = '\(ID)'", nil, nil, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error creating table: \(errmsg)")
+            print("error deleting Contact: \(errmsg)")
         }
     }
    
