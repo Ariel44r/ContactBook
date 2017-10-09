@@ -52,10 +52,11 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
     
     @IBAction func updateContact(_ sender: Any) {
         let currentContact = ContactPhoto(nameTextField.text!,lastNameTextField.text!,cellPhonetextField.text!)
-        let indexString: String = String(index!)
+        let indexString: String = contactPhoto!.ID
         debugPrint("ID TO UPDATE: " + indexString)
         currentContact.setIDAndImagePath(indexString, dataBase.getPath())
         dataBase.updateRecord(currentContact)
+        displayalert(userMessage: "Contact updated successfully")
     }
     
     
@@ -125,6 +126,7 @@ extension ContactDetailViewController {
                     self.searches.insert(results, at: 0)
                 }
             }
+            self.displayalert(userMessage: "Contact deleted successfully")
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
@@ -182,3 +184,17 @@ extension ContactDetailViewController {
         self.dismiss(animated: true, completion: nil)
     }
 }
+
+//MARK: Alerts
+extension ContactDetailViewController {
+    
+    //display_alert_function
+    func displayalert(userMessage:String) {
+        let myalert = UIAlertController(title:"Notice", message:userMessage, preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title:"ok", style: UIAlertActionStyle.default, handler:nil)
+        myalert.addAction(okAction)
+        self.present(myalert, animated:true, completion:nil)
+    }
+    
+}
+

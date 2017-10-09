@@ -77,7 +77,7 @@ extension addOrChangeDataContact {
     
     //display_alert_function
     func displayalert(userMessage:String) {
-        let myalert = UIAlertController(title:"Aviso", message:userMessage, preferredStyle: UIAlertControllerStyle.alert)
+        let myalert = UIAlertController(title:"Notice", message:userMessage, preferredStyle: UIAlertControllerStyle.alert)
         let okAction = UIAlertAction(title:"ok", style: UIAlertActionStyle.default, handler:nil)
         myalert.addAction(okAction)
         self.present(myalert, animated:true, completion:nil)
