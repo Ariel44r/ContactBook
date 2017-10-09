@@ -144,9 +144,7 @@ extension viewControllerTableView {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! tableViewCell
         let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.labelContact.text = contactPhoto.name
-        //cell.actionSheet.tag = indexPath.row
         cell.UIImageContact.image = contactPhoto.getImageFromPathWithID(indexPath.row)
-        //cell.actionSheet.addTarget(self, action: #selector(viewControllerTableView.actionSheet(_:)), for: UIControlEvents.touchUpInside)
         
         return cell
         

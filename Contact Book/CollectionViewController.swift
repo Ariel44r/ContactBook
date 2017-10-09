@@ -139,8 +139,6 @@ extension CollectionViewController {
         let contactPhoto = photoForIndexPath(indexPath: indexPath)
         cell.backgroundColor = UIColor.white
         cell.contactPhoto.image = contactPhoto.getImageFromPathWithID(indexPath.item)
-        //cell.actionSheet.addTarget(self, action: #selector(CollectionViewController.actionSheet(_:)), for: UIControlEvents.touchUpInside)
-        //cell.actionSheet.tag = indexPath.item
         cell.contactName.text = contactPhoto.name
         return cell
     }
@@ -172,74 +170,3 @@ extension CollectionViewController : UICollectionViewDelegateFlowLayout {
     }
 
 }
-
-//MARK: actionSheetExtension
-extension CollectionViewController {
-    //actionSheetFunc
-    func actionSheetFunc(_ index: Int) {
-        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
-        
-        let changeImageAction = UIAlertAction(title: "Choose Image from Gallery", style: .default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            debugPrint("Chose Image From Gallery")
-            
-            debugPrint("Button change image from gallery are pressed")
-            let image = UIImagePickerController()
-            image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
-            image.sourceType = UIImagePickerControllerSourceType.photoLibrary
-            image.allowsEditing = false
-            self.currentIndexPhoto = index
-            self.present(image,animated: true) {
-                //after complete process
-            }
-            
-        })
-        
-        let takeAPicture = UIAlertAction(title: "Take a picture", style: .default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            debugPrint("Take a Picture")
-        })
-        
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
-            (alert: UIAlertAction!) -> Void in
-            debugPrint("Item Deleted")
-            self.contact.deleteContact(index: index)
-            self.contact.searchContactForTerm("") {
-                results, error in
-                if let error = error {
-                    debugPrint("Error searching \(error)")
-                    return
-                }
-                if let results = results {
-                    self.searches.insert(results, at: 0)
-                    self.collectionContacts.reloadData()
-                }
-            }
-        })
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
-            (alert: UIAlertAction!) -> Void in
-            print("Cancelled")
-        })
-        
-        
-        optionMenu.addAction(changeImageAction)
-        optionMenu.addAction(takeAPicture)
-        optionMenu.addAction(deleteAction)
-        optionMenu.addAction(cancelAction)
-        
-        self.present(optionMenu, animated: true, completion: nil)
-    }
-    
-    //get image and assign to contact`s atribute
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            contact.receiveImageChangeAndSave(image, currentIndexPhoto)
-        }
-        self.dismiss(animated: true, completion: nil)
-        collectionContacts.reloadData()
-        
-    }
-}
-

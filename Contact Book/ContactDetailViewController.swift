@@ -116,7 +116,7 @@ extension ContactDetailViewController {
             (alert: UIAlertAction!) -> Void in
             debugPrint("Item Deleted")
             self.contact.deleteContact(index: index)
-            self.contact.searchContactForTerm("") {
+            /*self.contact.searchContactForTerm("") {
                 results, error in
                 if let error = error {
                     debugPrint("Error searching \(error)")
@@ -125,7 +125,7 @@ extension ContactDetailViewController {
                 if let results = results {
                     self.searches.insert(results, at: 0)
                 }
-            }
+            }*/
             self.displayalert(userMessage: "Contact deleted successfully")
         })
         
