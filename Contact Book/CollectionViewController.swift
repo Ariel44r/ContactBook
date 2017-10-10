@@ -10,7 +10,7 @@ import UIKit
 
 
 
-class CollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ContactDetailViewControllerDelegate {
 
     fileprivate let reuseIdentifier = "ContactCell"
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
@@ -51,6 +51,22 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
                 return
             }
             
+            if let results = results {
+                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
+                self.searches.insert(results, at: 0)
+                self.collectionContacts.reloadData()
+            }
+        }
+    }
+    
+    //DELEGATEFUNCTION
+    func updateContacts() {
+        contact.searchContactForTerm("") {
+            results, error in
+            if let error = error {
+                debugPrint("Error searching \(error)")
+                return
+            }
             if let results = results {
                 debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
                 self.searches.insert(results, at: 0)
@@ -116,6 +132,7 @@ extension CollectionViewController: UITextFieldDelegate {
             detailVC.contactPhoto = contactPhoto
             let sendIndex = segue.destination as! ContactDetailViewController
             sendIndex.index = currentIndexPhoto
+            detailVC.delegate = self
         }
     }
     

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ContactDetailViewControllerDelegate: class {
+    func updateContacts()
+}
+
 class ContactDetailViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     //MARK: InstancesAndVariables
@@ -17,10 +21,12 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
     var index: Int?
     var indexImage: Int?
     let dataBase = ContactDataBase()
+    weak var delegate: ContactDetailViewControllerDelegate?
     
     
     @IBAction func back(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+        delegate?.updateContacts()
     }
     
     //MARK: OutletsAndActions
@@ -42,6 +48,7 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
     
     @IBAction func changeImage(_ sender: Any) {
         actionSheetFuncImage(Int((contactPhoto?.ID)!)!)
+        delegate?.updateContacts()
     }
     
     @IBAction func editButton(_ sender: Any) {
@@ -56,6 +63,7 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
         debugPrint("ID TO UPDATE: " + indexString)
         currentContact.setIDAndImagePath(indexString, dataBase.getPath())
         dataBase.updateRecord(currentContact)
+        delegate?.updateContacts()
         displayalert(userMessage: "Contact updated successfully")
     }
     
@@ -126,6 +134,7 @@ extension ContactDetailViewController {
                     self.searches.insert(results, at: 0)
                 }
             }*/
+            self.delegate?.updateContacts()
             self.displayalert(userMessage: "Contact deleted successfully")
         })
         

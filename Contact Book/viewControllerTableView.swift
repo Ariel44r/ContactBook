@@ -8,7 +8,7 @@
 
 import UIKit
 
-class viewControllerTableView: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class viewControllerTableView: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,ContactDetailViewControllerDelegate {
     
     fileprivate let reuseIdentifier: String = "ContactTableViewCell"
     fileprivate var searches = [ContactSearchResults]()
@@ -26,7 +26,6 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
   
     @IBAction func addContact(_ sender: Any) {
         self.performSegue(withIdentifier: "addContact", sender: nil)
-        tableViewContacts.reloadData()
     }
     
     @IBAction func goToCollectionController(_ sender: Any) {
@@ -57,8 +56,21 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    
-
+    //DELEGATEFUNCTION
+    func updateContacts() {
+        contact.searchContactForTerm("") {
+            results, error in
+            if let error = error {
+                debugPrint("Error searching \(error)")
+                return
+            }
+            if let results = results {
+                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
+                self.searches.insert(results, at: 0)
+                self.tableViewContacts.reloadData()
+            }
+        }
+    }
     /*
     // MARK: - Navigation
 
@@ -121,6 +133,7 @@ extension viewControllerTableView: UITextFieldDelegate {
             detailVC.contactPhoto = contactPhoto
             let sendIndex = segue.destination as! ContactDetailViewController
             sendIndex.index = currentIndexPhotoItem
+            detailVC.delegate = self
         }
     }
     
@@ -157,4 +170,6 @@ extension viewControllerTableView {
     }
     
 }
+
+
 
