@@ -124,18 +124,9 @@ extension ContactDetailViewController {
             (alert: UIAlertAction!) -> Void in
             debugPrint("Item Deleted")
             self.contact.deleteContact(index: index)
-            /*self.contact.searchContactForTerm("") {
-                results, error in
-                if let error = error {
-                    debugPrint("Error searching \(error)")
-                    return
-                }
-                if let results = results {
-                    self.searches.insert(results, at: 0)
-                }
-            }*/
-            self.delegate?.updateContacts()
             self.displayalert(userMessage: "Contact deleted successfully")
+            self.back()
+            self.delegate?.updateContacts()
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
@@ -190,6 +181,10 @@ extension ContactDetailViewController {
             contact.receiveImageChangeAndSave(image, indexImage!)
             print("SAVE PHOTO WHIT ID: \(indexImage!)")
         }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func back() {
         self.dismiss(animated: true, completion: nil)
     }
 }
