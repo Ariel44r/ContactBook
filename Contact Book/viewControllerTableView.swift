@@ -8,7 +8,7 @@
 
 import UIKit
 
-class viewControllerTableView: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,ContactDetailViewControllerDelegate {
+class viewControllerTableView: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,ContactDetailViewControllerDelegate, addOrChangeDataContactDelegate {
     
     fileprivate let reuseIdentifier: String = "ContactTableViewCell"
     fileprivate var searches = [ContactSearchResults]()
@@ -56,7 +56,7 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    //DELEGATEFUNCTION
+    //DELEGATEFUNCTIONS
     func updateContacts() {
         contact.searchContactForTerm("") {
             results, error in
@@ -71,16 +71,21 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
             }
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func updateContactsFromAddOrChange() {
+        contact.searchContactForTerm("") {
+            results, error in
+            if let error = error {
+                debugPrint("Error searching \(error)")
+                return
+            }
+            if let results = results {
+                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
+                self.searches.insert(results, at: 0)
+                self.tableViewContacts.reloadData()
+            }
+        }
     }
-    */
-
 }
 
 //ObtainPhotoForIndexPath
@@ -133,6 +138,10 @@ extension viewControllerTableView: UITextFieldDelegate {
             detailVC.contactPhoto = contactPhoto
             let sendIndex = segue.destination as! ContactDetailViewController
             sendIndex.index = currentIndexPhotoItem
+            detailVC.delegate = self
+        }
+        if segue.identifier == "addContact" {
+            let detailVC = segue.destination as! addOrChangeDataContact
             detailVC.delegate = self
         }
     }

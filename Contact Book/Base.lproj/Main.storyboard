@@ -339,13 +339,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yBK-9Y-6qs">
-                                            <rect key="frame" x="1" y="0.0" width="200" height="149"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="200" id="IKK-nd-0dx"/>
-                                                <constraint firstAttribute="height" constant="149" id="rb5-nG-YAx"/>
-                                            </constraints>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgp-rD-Jqd">
                                             <rect key="frame" x="28" y="149" width="143" height="31"/>
                                             <constraints>
@@ -356,13 +349,20 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yBK-9Y-6qs">
+                                            <rect key="frame" x="26" y="0.0" width="147" height="149"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="149" id="8Iv-dS-kmq"/>
+                                                <constraint firstAttribute="width" constant="147" id="XUe-bc-wLK"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="yBK-9Y-6qs" firstAttribute="centerX" secondItem="MsN-l5-s31" secondAttribute="centerX" constant="1" id="Fne-hp-uW2"/>
+                                    <constraint firstItem="yBK-9Y-6qs" firstAttribute="centerY" secondItem="MsN-l5-s31" secondAttribute="centerY" constant="-25.5" id="AN4-7J-jFZ"/>
                                     <constraint firstItem="Dgp-rD-Jqd" firstAttribute="centerX" secondItem="MsN-l5-s31" secondAttribute="centerX" id="KwT-XZ-VGl"/>
                                     <constraint firstItem="Dgp-rD-Jqd" firstAttribute="centerY" secondItem="MsN-l5-s31" secondAttribute="centerY" constant="64.5" id="WSu-9L-djx"/>
-                                    <constraint firstItem="yBK-9Y-6qs" firstAttribute="centerY" secondItem="MsN-l5-s31" secondAttribute="centerY" constant="-25.5" id="vRW-nX-VGK"/>
+                                    <constraint firstItem="yBK-9Y-6qs" firstAttribute="centerX" secondItem="MsN-l5-s31" secondAttribute="centerX" id="fBF-tU-1DM"/>
                                 </constraints>
                                 <size key="customSize" width="200" height="200"/>
                                 <connections>
