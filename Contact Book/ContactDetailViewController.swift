@@ -25,8 +25,7 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
     
     
     @IBAction func back(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-        delegate?.updateContacts()
+        backAndUpdateContacts()
     }
     
     //MARK: OutletsAndActions
@@ -174,6 +173,10 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
         scrollView.setContentOffset(cgpoint, animated: true)
     }
     
+    func backAndUpdateContacts() {
+        self.dismiss(animated: true, completion: nil)
+        delegate?.updateContacts()
+    }
 
     /*
     // MARK: - Navigation
@@ -199,8 +202,7 @@ extension ContactDetailViewController {
             debugPrint("Item Deleted")
             self.contact.deleteContact(index: index)
             self.displayalert(userMessage: "Contact deleted successfully")
-            self.back()
-            self.delegate?.updateContacts()
+            self.backAndUpdateContacts()
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
@@ -255,10 +257,6 @@ extension ContactDetailViewController {
             contact.receiveImageChangeAndSave(image, indexImage!)
             print("SAVE PHOTO WHIT ID: \(indexImage!)")
         }
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func back() {
         self.dismiss(animated: true, completion: nil)
     }
 }
