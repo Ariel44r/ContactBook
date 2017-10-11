@@ -67,7 +67,7 @@ class Contact {
         })
     }
     
-    func deployAllContatcsOnJson (completion : @escaping (_ results: ContactSearchResults?, _ error: Error?) -> Void) {
+    func deployAllContatcsOnDataBase (completion : @escaping (_ results: ContactSearchResults?, _ error: Error?) -> Void) {
         let receiveFromJSON = contactDataBase.queryDataBase("*")
         
         OperationQueue.main.addOperation({
@@ -94,7 +94,10 @@ extension Contact {
 extension Contact {
     func getIDForNewImage() -> String {
         let contactPhotos = contactDataBase.queryDataBase("*")
-        return String(contactPhotos.count)
+        var newID: Int = Int(contactPhotos[contactPhotos.count - 1].ID)!
+        newID = newID + 1
+        debugPrint("NEWIDFORNEWCONTACTIS: \(newID)")
+        return String(newID)
     }
 }
 

@@ -21,7 +21,6 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     
     //MARK: Actions&Outlets
     
-    
     //collectionViewOutlet
     @IBOutlet var collectionContacts: UICollectionView!
     
@@ -34,7 +33,6 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
         self.performSegue(withIdentifier: "segueTableView", sender: nil)
         
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "viewControllerTableView") as! viewControllerTableView
-        
         //vc.modalPresentationStyle = .custom
         self.present(vc, animated: true, completion: nil)
     }
@@ -43,7 +41,7 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        contact.deployAllContatcsOnJson(){
+        contact.deployAllContatcsOnDataBase(){
             results, error in
             
             if let error = error {
@@ -61,33 +59,11 @@ class CollectionViewController: UICollectionViewController, UIImagePickerControl
     
     //DELEGATEFUNCTION
     func updateContacts() {
-        contact.searchContactForTerm("") {
-            results, error in
-            if let error = error {
-                debugPrint("Error searching \(error)")
-                return
-            }
-            if let results = results {
-                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
-                self.searches.insert(results, at: 0)
-                self.collectionContacts.reloadData()
-            }
-        }
+        refreshContacts("")
     }
     
     func updateContactsFromAddOrChange() {
-        contact.searchContactForTerm("") {
-            results, error in
-            if let error = error {
-                debugPrint("Error searching \(error)")
-                return
-            }
-            if let results = results {
-                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
-                self.searches.insert(results, at: 0)
-                self.collectionContacts.reloadData()
-            }
-        }
+        refreshContacts("")
     }
 }
 
@@ -98,6 +74,24 @@ private extension CollectionViewController {
         return searches[indexPath.section].searchResults[indexPath.row]
     }
     
+}
+
+//MARK: refreshContacts
+extension CollectionViewController {
+    func refreshContacts(_ searchTerm: String) {
+        contact.searchContactForTerm(searchTerm) {
+            results, error in
+            if let error = error {
+                debugPrint("Error searching \(error)")
+                return
+            }
+            if let results = results {
+                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
+                self.searches.insert(results, at: 0)
+                self.collectionContacts.reloadData()
+            }
+        }
+    }
 }
 
 //MARK: UITextFieldDelegate

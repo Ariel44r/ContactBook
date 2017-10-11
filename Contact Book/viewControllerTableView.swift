@@ -37,7 +37,7 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        contact.deployAllContatcsOnJson() {
+        contact.deployAllContatcsOnDataBase() {
             results, error in
             if let error = error {
                 debugPrint("Error searching \(error)")
@@ -51,6 +51,7 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
             }
         }
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -58,33 +59,11 @@ class viewControllerTableView: UIViewController, UITableViewDelegate, UITableVie
     
     //DELEGATEFUNCTIONS
     func updateContacts() {
-        contact.searchContactForTerm("") {
-            results, error in
-            if let error = error {
-                debugPrint("Error searching \(error)")
-                return
-            }
-            if let results = results {
-                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
-                self.searches.insert(results, at: 0)
-                self.tableViewContacts.reloadData()
-            }
-        }
+        refreshContacts("")
     }
     
     func updateContactsFromAddOrChange() {
-        contact.searchContactForTerm("") {
-            results, error in
-            if let error = error {
-                debugPrint("Error searching \(error)")
-                return
-            }
-            if let results = results {
-                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
-                self.searches.insert(results, at: 0)
-                self.tableViewContacts.reloadData()
-            }
-        }
+        refreshContacts("")
     }
 }
 
@@ -111,24 +90,7 @@ extension viewControllerTableView: UITextFieldDelegate {
         }else{
             newText = textField.text!.substring(to: textField.text!.index(before: textField.text!.endIndex))
         }
-        
-        contact.searchContactForTerm(newText) {
-            results, error in
-            
-            activityIndicator.removeFromSuperview()
-            
-            if let error = error {
-                debugPrint("Error searching \(error)")
-                return
-            }
-            
-            if let results = results {
-                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
-                self.searches.insert(results, at: 0)
-                
-                self.tableViewContacts.reloadData()
-            }
-        }
+        refreshContacts(newText)
         return true
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -148,6 +110,23 @@ extension viewControllerTableView: UITextFieldDelegate {
     
 }
 
+//MARK: refreshContacts
+extension viewControllerTableView {
+    func refreshContacts(_ searchTerm: String) {
+        contact.searchContactForTerm(searchTerm) {
+            results, error in
+            if let error = error {
+                debugPrint("Error searching \(error)")
+                return
+            }
+            if let results = results {
+                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
+                self.searches.insert(results, at: 0)
+                self.tableViewContacts.reloadData()
+            }
+        }
+    }
+}
 
 //MARK: tableViewDelegate
 extension viewControllerTableView {
