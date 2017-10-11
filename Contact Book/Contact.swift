@@ -94,8 +94,11 @@ extension Contact {
 extension Contact {
     func getIDForNewImage() -> String {
         let contactPhotos = contactDataBase.queryDataBase("*")
-        var newID: Int = Int(contactPhotos[contactPhotos.count - 1].ID)!
-        newID = newID + 1
+        var newID: Int = 0
+        if contactPhotos.count > 0 {
+            newID = Int(contactPhotos[contactPhotos.count - 1].ID)!
+            newID = newID + 1
+        }
         debugPrint("NEWIDFORNEWCONTACTIS: \(newID)")
         return String(newID)
     }
