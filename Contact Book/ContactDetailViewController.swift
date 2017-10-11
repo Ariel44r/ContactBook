@@ -12,7 +12,7 @@ protocol ContactDetailViewControllerDelegate: class {
     func updateContacts()
 }
 
-class ContactDetailViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ContactDetailViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     //MARK: InstancesAndVariables
     var contact = Contact()
@@ -144,6 +144,22 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: textFieldDelegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let cgpoint: CGPoint = CGPoint(x: 0,y: 200)
+        scrollView.setContentOffset(cgpoint, animated: true)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let cgpoint: CGPoint = CGPoint(x: 0,y: 0)
+        scrollView.setContentOffset(cgpoint, animated: true)
     }
     
 
