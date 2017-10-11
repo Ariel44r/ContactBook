@@ -77,6 +77,10 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        nameTextField.tag = 0
+        lastNameTextField.tag = 1
+        cellPhonetextField.tag = 2
+        nameTextField.delegate = self
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector (didTapView(gesture:)))
         view.addGestureRecognizer(tapGesture)
     }
@@ -148,7 +152,15 @@ class ContactDetailViewController: UIViewController,UIImagePickerControllerDeleg
     
     //MARK: textFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        
+        // Try to find next responder
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+        }
+        
         return true
     }
     
