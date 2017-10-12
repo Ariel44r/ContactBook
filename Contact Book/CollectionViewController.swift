@@ -110,24 +110,8 @@ extension CollectionViewController: UITextFieldDelegate {
         }else{
             newText = textField.text!.substring(to: textField.text!.index(before: textField.text!.endIndex))
         }
-        
-        contact.searchContactForTerm(newText) {
-            results, error in
-            
-            activityIndicator.removeFromSuperview()
-            
-            if let error = error {
-                debugPrint("Error searching \(error)")
-                return
-            }
-            
-            if let results = results {
-                debugPrint("Have been Found: \(results.searchResults.count) matching for \(results.searchTerm)")
-                self.searches.insert(results, at: 0)
-                
-                self.collectionContacts.reloadData()
-            }
-        }
+        activityIndicator.removeFromSuperview()
+        refreshContacts(newText)
         
         //textField.text = nil
         //textField.resignFirstResponder()

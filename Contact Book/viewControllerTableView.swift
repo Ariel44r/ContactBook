@@ -91,6 +91,7 @@ extension viewControllerTableView: UITextFieldDelegate {
             newText = textField.text!.substring(to: textField.text!.index(before: textField.text!.endIndex))
         }
         refreshContacts(newText)
+        activityIndicator.removeFromSuperview()
         return true
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

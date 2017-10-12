@@ -105,13 +105,6 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
-		4F46F53A1F82E1110053BBFB /* PopUpMenuController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = PopUpMenuController;
-			sourceTree = "<group>";
-		};
 		4F537BD11F86FF2100F71671 /* ContactDataBase */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,7 +161,6 @@
 				4F802FE61F75D8AD00DE31DE /* AppDelegate.swift */,
 				4F802FEA1F75D8AD00DE31DE /* Main.storyboard */,
 				4FA4512D1F845F80004353BA /* ContactDetail */,
-				4F46F53A1F82E1110053BBFB /* PopUpMenuController */,
 				4F6033411F7F07A500421161 /* tableViewController */,
 				4F5E95711F79C910009E90A7 /* UICollectionControllers */,
 				4F80301C1F75E96D00DE31DE /* ContactAPI */,

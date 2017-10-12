@@ -25,7 +25,9 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Please allow me acces to photo gallery</string>
+	<string>Please allow me access to photo gallery</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow me access to your camera to take a picturer</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
