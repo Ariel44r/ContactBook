@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rnW-Rc-z27">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rnW-Rc-z27">
                                 <rect key="frame" x="307" y="28" width="30" height="30"/>
                                 <state key="normal" title="Edit"/>
                                 <connections>
@@ -30,7 +30,7 @@
                                 </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qHY-TJ-nbj">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ULN-xZ-fVb">
                                         <rect key="frame" x="19" y="383" width="337" height="30"/>
@@ -90,7 +90,7 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7DV-0h-ou6">
-                                        <rect key="frame" x="19" y="521" width="337" height="30"/>
+                                        <rect key="frame" x="19" y="553" width="337" height="30"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Record">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -122,8 +122,8 @@
                                     <constraint firstItem="GoX-fq-xkv" firstAttribute="leading" secondItem="qHY-TJ-nbj" secondAttribute="leading" constant="23" id="cqa-os-eZA"/>
                                     <constraint firstItem="GoX-fq-xkv" firstAttribute="leading" secondItem="7Gb-6B-Q6N" secondAttribute="leading" id="gqE-L4-PPF"/>
                                     <constraint firstItem="qyE-w1-vKr" firstAttribute="leading" secondItem="ULN-xZ-fVb" secondAttribute="leading" id="j9m-6h-3A4"/>
-                                    <constraint firstItem="7DV-0h-ou6" firstAttribute="top" secondItem="G57-ix-GDD" secondAttribute="bottom" constant="15" id="o5V-qU-6MR"/>
-                                    <constraint firstAttribute="bottom" secondItem="7DV-0h-ou6" secondAttribute="bottom" constant="55" id="s7J-Mh-6mP"/>
+                                    <constraint firstItem="7DV-0h-ou6" firstAttribute="top" secondItem="G57-ix-GDD" secondAttribute="bottom" constant="47" id="o5V-qU-6MR"/>
+                                    <constraint firstAttribute="bottom" secondItem="7DV-0h-ou6" secondAttribute="bottom" constant="20" id="s7J-Mh-6mP"/>
                                     <constraint firstItem="XCA-8A-qlO" firstAttribute="centerX" secondItem="qHY-TJ-nbj" secondAttribute="centerX" id="sDc-Ws-id3"/>
                                     <constraint firstItem="kli-YD-uI7" firstAttribute="trailing" secondItem="wXe-tj-aO2" secondAttribute="trailing" id="shx-Np-4gF"/>
                                     <constraint firstItem="wXe-tj-aO2" firstAttribute="top" secondItem="qHY-TJ-nbj" secondAttribute="top" constant="23" id="tVj-78-HG8"/>
@@ -133,7 +133,7 @@
                                     <constraint firstItem="G57-ix-GDD" firstAttribute="top" secondItem="7Gb-6B-Q6N" secondAttribute="bottom" constant="8" symbolic="YES" id="zQl-6f-kfE"/>
                                 </constraints>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V2T-t9-7Nj">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V2T-t9-7Nj">
                                 <rect key="frame" x="16" y="28" width="34" height="30"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
@@ -141,7 +141,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czF-Hs-JgN">
-                                <rect key="frame" x="345" y="-33" width="30" height="30"/>
+                                <rect key="frame" x="345" y="28" width="30" height="30"/>
                                 <state key="normal" title="..."/>
                                 <connections>
                                     <action selector="actionSheet:" destination="8re-n5-Ka3" eventType="touchUpInside" id="yNn-k1-hSc"/>
@@ -158,8 +158,8 @@
                             <constraint firstItem="qHY-TJ-nbj" firstAttribute="width" secondItem="Vt2-54-WAA" secondAttribute="width" id="bhV-wS-qvJ"/>
                             <constraint firstItem="qHY-TJ-nbj" firstAttribute="trailing" secondItem="czF-Hs-JgN" secondAttribute="trailing" id="cW0-DB-eae"/>
                             <constraint firstItem="rnW-Rc-z27" firstAttribute="baseline" secondItem="V2T-t9-7Nj" secondAttribute="baseline" id="iQn-IS-m30"/>
-                            <constraint firstItem="qHY-TJ-nbj" firstAttribute="top" secondItem="rnW-Rc-z27" secondAttribute="bottom" constant="3" id="ibQ-jo-2VC"/>
-                            <constraint firstItem="qHY-TJ-nbj" firstAttribute="height" secondItem="Vt2-54-WAA" secondAttribute="height" id="tkh-q2-TmN"/>
+                            <constraint firstItem="qHY-TJ-nbj" firstAttribute="top" secondItem="rnW-Rc-z27" secondAttribute="bottom" constant="6" id="ibQ-jo-2VC"/>
+                            <constraint firstItem="qHY-TJ-nbj" firstAttribute="height" secondItem="Vt2-54-WAA" secondAttribute="height" constant="-64" id="tkh-q2-TmN"/>
                         </constraints>
                     </view>
                     <connections>
@@ -204,8 +204,6 @@
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="180" id="7MI-fq-ki0"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="r5N-Ue-zaN"/>
-                                                        <constraint firstAttribute="height" constant="21" id="sIo-zJ-ezv"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -214,7 +212,6 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qHQ-aE-7Tj">
                                                     <rect key="frame" x="20" y="8" width="118" height="127"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="127" id="XgC-O4-mXS"/>
                                                         <constraint firstAttribute="width" constant="118" id="q3X-hN-uGe"/>
                                                     </constraints>
                                                 </imageView>
@@ -225,10 +222,8 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="FW6-NP-6XR" secondAttribute="trailing" constant="33" id="1vE-35-wBU"/>
                                                 <constraint firstItem="FW6-NP-6XR" firstAttribute="top" secondItem="eac-Kn-7SM" secondAttribute="topMargin" constant="52" id="7Jf-HZ-qfh"/>
                                                 <constraint firstItem="qHQ-aE-7Tj" firstAttribute="top" secondItem="eac-Kn-7SM" secondAttribute="topMargin" id="SjF-mn-ehD"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="qHQ-aE-7Tj" secondAttribute="bottom" constant="8.5" id="YmB-uu-zpk"/>
                                                 <constraint firstItem="FW6-NP-6XR" firstAttribute="leading" secondItem="qHQ-aE-7Tj" secondAttribute="trailing" constant="16" id="iTM-g1-P9Q"/>
                                                 <constraint firstItem="FW6-NP-6XR" firstAttribute="leading" secondItem="qHQ-aE-7Tj" secondAttribute="trailing" constant="16" id="jzi-7m-vMx"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="FW6-NP-6XR" secondAttribute="bottom" constant="53.5" id="sBO-jc-haN"/>
                                                 <constraint firstItem="qHQ-aE-7Tj" firstAttribute="centerY" secondItem="eac-Kn-7SM" secondAttribute="centerY" constant="-4.25" id="ujd-nR-Qij"/>
                                                 <constraint firstItem="qHQ-aE-7Tj" firstAttribute="leading" secondItem="eac-Kn-7SM" secondAttribute="leadingMargin" constant="12" id="zgc-RO-4e2"/>
                                             </constraints>
@@ -457,7 +452,10 @@
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o8u-7a-dgB">
                                         <rect key="frame" x="8" y="415" width="359" height="30"/>
-                                        <state key="normal" title="Record"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Record">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="actionButtonRecord:" destination="o5C-LN-35Z" eventType="touchUpInside" id="qdo-2M-uVZ"/>
                                         </connections>
