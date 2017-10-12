@@ -52,9 +52,10 @@ class addOrChangeDataContact: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        labelName.tag = 0
-        labelLastName.tag = 1
-        labelCellPhone.tag = 2
+        textFieldName.tag = 0
+        textFieldLastName.tag = 1
+        textFieldCellPhone.tag = 2
+        textFieldName.delegate = self
         // Do any additional setup after loading the view.
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector (didTapView(gesture:)))
         view.addGestureRecognizer(tapGesture)
@@ -63,6 +64,16 @@ class addOrChangeDataContact: UIViewController, UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addObservers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        removeObservers()
     }
     
     func didTapView(gesture: UITapGestureRecognizer) {
