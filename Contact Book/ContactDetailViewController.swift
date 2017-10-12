@@ -235,14 +235,14 @@ extension ContactDetailViewController {
         let takeAPicture = UIAlertAction(title: "Take a picture", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             debugPrint("Take a Picture")
-            /*self.indexImage = index
+            self.indexImage = index
             let image = UIImagePickerController()
             image.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
             image.sourceType = UIImagePickerControllerSourceType.camera
             image.allowsEditing = false
             self.present(image,animated: true) {
                 //after complete process
-            }*/
+            }
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
